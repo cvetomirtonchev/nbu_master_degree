@@ -1,4 +1,4 @@
-package tsvetomir.tonchev.findit
+package tsvetomir.tonchev.findit.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,7 +18,10 @@ class LoginActivity : ComponentActivity() {
         setContent {
             FindItTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     Greeting("Android")
                 }
             }
@@ -28,7 +31,6 @@ class LoginActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    
     Text(text = "Hello $name!")
 }
 
