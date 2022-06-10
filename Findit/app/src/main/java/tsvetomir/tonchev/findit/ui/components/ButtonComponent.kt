@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.WhiteColor
@@ -46,20 +48,37 @@ fun ButtonWithRoundCornerShape(
         colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
         shape = RoundedCornerShape(16.dp)
     ) {
-        if (icon != 0) {
-            Image(
-                painter = painterResource(id = icon),
-                contentDescription = "Image start",
-                modifier = Modifier.size(36.dp)
+        ConstraintLayout(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            val (text, image) = createRefs()
+            Text(
+                text = title,
+                color = textColor,
+                modifier = Modifier
+                    .constrainAs(text) {
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }
+                    .padding(vertical = 16.dp),
+                textAlign = TextAlign.Center
             )
+            if (icon != 0) {
+                Image(
+                    painter = painterResource(id = icon),
+                    contentDescription = "Image start",
+                    modifier = Modifier
+                        .size(36.dp)
+                        .constrainAs(image) {
+                            top.linkTo(text.top)
+                            end.linkTo(text.start, margin = 8.dp)
+                            bottom.linkTo(text.bottom)
+                        }
+                )
+            }
         }
-        Text(
-            text = title,
-            color = textColor,
-            modifier = Modifier
-                .padding(vertical = 16.dp)
-                .padding(end = 36.dp)
-        )
     }
 
 }
