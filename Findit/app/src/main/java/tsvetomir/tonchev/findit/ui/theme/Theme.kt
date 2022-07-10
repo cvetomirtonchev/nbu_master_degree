@@ -9,7 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.core.view.ViewCompat
+import tsvetomir.tonchev.findit.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryGreen,
@@ -28,6 +32,11 @@ private val LightColorScheme = lightColorScheme(
 //    onTertiary = Color.White,
 //    onBackground = Color(0xFF1C1B1F),
 //    onSurface = Color(0xFF1C1B1F),
+)
+val fonts = FontFamily(
+    Font(R.font.inter_bold, FontWeight.Bold),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_light, FontWeight.Light),
 )
 
 @Composable

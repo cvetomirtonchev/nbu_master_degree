@@ -1,3 +1,5 @@
 <resources>
+    <string name="server_client_id">412579573762-57oocq0jh761f03516nemsb8a294k9j9.apps.googleusercontent.com</string>
     <string name="app_name">Find it</string>
+    <string name="welcome_title">Welcome\nto Find it</string>
 </resources>

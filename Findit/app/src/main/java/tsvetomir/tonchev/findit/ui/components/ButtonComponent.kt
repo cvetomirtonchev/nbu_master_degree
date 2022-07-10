@@ -1,10 +1,7 @@
 package tsvetomir.tonchev.findit.ui.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -12,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,8 +29,8 @@ fun ButtonWithRoundCornerShape(
 ) {
     val buttonColor = when (type) {
         ButtonType.PRIMARY -> WhiteColor
-        else ->
-            MaterialTheme.colorScheme.primary
+        ButtonType.TEXT_BUTTON -> Color.Transparent
+        ButtonType.SECONDARY -> MaterialTheme.colorScheme.secondary
     }
 
     val textColor = when (type) {
@@ -61,9 +59,9 @@ fun ButtonWithRoundCornerShape(
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom)
-                    }
-                    .padding(vertical = 16.dp),
-                textAlign = TextAlign.Center
+                    },
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.labelMedium
             )
             if (icon != 0) {
                 Image(
@@ -90,16 +88,25 @@ class Render() {
         FindItTheme {
             Column {
                 ButtonWithRoundCornerShape(
-                    title = "Button",
+                    title = "Primary",
                     onClick = {},
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .height(60.dp)
                 )
                 ButtonWithRoundCornerShape(
-                    title = "Button",
+                    title = "SECONDARY",
                     onClick = {},
                     icon = R.drawable.ic_launcher_foreground,
                     modifier = Modifier.padding(16.dp),
                     type = ButtonType.SECONDARY
+                )
+
+                ButtonWithRoundCornerShape(
+                    title = "TEXT_BUTTON",
+                    onClick = {},
+                    modifier = Modifier.padding(16.dp),
+                    type = ButtonType.TEXT_BUTTON
                 )
             }
         }
@@ -108,5 +115,6 @@ class Render() {
 
 enum class ButtonType {
     PRIMARY,
-    SECONDARY
+    SECONDARY,
+    TEXT_BUTTON
 }
