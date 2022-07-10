@@ -3,11 +3,17 @@ buildscript {
         compose_version = '1.2.0-beta03'
         compose_constraint_layout_version = '1.0.1'
         google_auth_version = '20.2.0'
+        hilt_version = '2.38.1'
     }
 
     repositories {
         google()
     }
+
+    dependencies {
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
