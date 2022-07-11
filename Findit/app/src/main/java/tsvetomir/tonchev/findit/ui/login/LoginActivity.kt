@@ -3,6 +3,7 @@ package tsvetomir.tonchev.findit.ui.login
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -32,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import dagger.hilt.android.AndroidEntryPoint
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.components.ButtonType
 import tsvetomir.tonchev.findit.ui.components.ButtonWithRoundCornerShape
@@ -40,7 +42,10 @@ import tsvetomir.tonchev.findit.ui.theme.SecondaryGreen
 
 
 @ExperimentalComposeUiApi
+@AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
+
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
