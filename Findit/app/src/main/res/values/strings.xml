@@ -2,4 +2,12 @@
     <string name="server_client_id">412579573762-57oocq0jh761f03516nemsb8a294k9j9.apps.googleusercontent.com</string>
     <string name="app_name">Find it</string>
     <string name="welcome_title">Welcome\nto Find it</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_btn">Login</string>
+    <string name="skip_login_btn">Skip Login</string>
+    <string name="welcome_sub_title">We are here to find what you are looking for now</string>
+    <string name="register">Register</string>
+    <string name="empty_username_error">Username cannot be empty</string>
+    <string name="empty_password_error">Password cannot be empty</string>
 </resources>

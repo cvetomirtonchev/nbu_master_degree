@@ -6,4 +6,8 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepository @Inject constructor(val userService: UserService) {
+
+    suspend fun login(username: String, password: String) {
+
+    }
 }

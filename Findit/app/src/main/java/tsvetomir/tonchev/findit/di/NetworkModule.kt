@@ -4,15 +4,15 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import tsvetomir.tonchev.findit.FindItApp
 import tsvetomir.tonchev.findit.data.network.UserService
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-@InstallIn(FindItApp::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
@@ -30,7 +30,7 @@ object NetworkModule {
     fun provideUserService(
         @Named(MOSHI_DEFAULT) moshi: Moshi
     ): UserService =
-        Retrofit.Builder().baseUrl("www.google.com")
+        Retrofit.Builder().baseUrl("https://www.google.com")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(UserService::class.java)
