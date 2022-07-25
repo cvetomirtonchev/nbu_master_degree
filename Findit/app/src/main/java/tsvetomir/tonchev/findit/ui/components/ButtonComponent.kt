@@ -81,34 +81,32 @@ fun ButtonWithRoundCornerShape(
 
 }
 
-class Render() {
-    @Preview(showBackground = true, backgroundColor = 0x989a82)
-    @Composable
-    fun PreviewButton() {
-        FindItTheme {
-            Column {
-                ButtonWithRoundCornerShape(
-                    title = "Primary",
-                    onClick = {},
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .height(60.dp)
-                )
-                ButtonWithRoundCornerShape(
-                    title = "SECONDARY",
-                    onClick = {},
-                    icon = R.drawable.ic_launcher_foreground,
-                    modifier = Modifier.padding(16.dp),
-                    type = ButtonType.SECONDARY
-                )
+@Preview(showBackground = true, backgroundColor = 0x989a82)
+@Composable
+fun PreviewButton() {
+    FindItTheme {
+        Column {
+            ButtonWithRoundCornerShape(
+                title = "Primary",
+                onClick = {},
+                modifier = Modifier
+                    .padding(16.dp)
+                    .height(60.dp)
+            )
+            ButtonWithRoundCornerShape(
+                title = "SECONDARY",
+                onClick = {},
+                icon = R.drawable.ic_launcher_foreground,
+                modifier = Modifier.padding(16.dp),
+                type = ButtonType.SECONDARY
+            )
 
-                ButtonWithRoundCornerShape(
-                    title = "TEXT_BUTTON",
-                    onClick = {},
-                    modifier = Modifier.padding(16.dp),
-                    type = ButtonType.TEXT_BUTTON
-                )
-            }
+            ButtonWithRoundCornerShape(
+                title = "TEXT_BUTTON",
+                onClick = {},
+                modifier = Modifier.padding(16.dp),
+                type = ButtonType.TEXT_BUTTON
+            )
         }
     }
 }
