@@ -1,26 +1,24 @@
 package f102249.find_it_bff.payload.response;
 
-import java.util.List;
-
 public class UserInfoResponse {
-    private Long id;
     private String username;
     private String email;
-    private List<String> roles;
 
-    public UserInfoResponse(Long id, String username, String email, List<String> roles) {
-        this.id = id;
+    private String firstName;
+
+    private String lastName;
+
+    private String dateOfBirth;
+
+    private String gender;
+
+    public UserInfoResponse(String username, String email, String firstName, String lastName, String dateOfBirth, String gender) {
         this.username = username;
         this.email = email;
-        this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
     }
 
     public String getEmail() {
@@ -39,7 +37,19 @@ public class UserInfoResponse {
         this.username = username;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
     }
 }

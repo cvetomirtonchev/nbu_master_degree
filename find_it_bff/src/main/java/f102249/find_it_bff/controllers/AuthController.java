@@ -12,8 +12,6 @@ import f102249.find_it_bff.repository.UserRepository;
 import f102249.find_it_bff.security.jwt.JwtUtils;
 import f102249.find_it_bff.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,11 +20,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -48,7 +45,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, HttpServletRequest request) {
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -57,17 +54,19 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        String jwtCookie = jwtUtils.generateJwtToken(userDetails);
 
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(userDetails.getId(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles));
+        UserInfoResponse infoResponse = new UserInfoResponse(
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                userDetails.getFirstName(),
+                userDetails.getLastName(),
+                userDetails.getDateOfBirth(),
+                userDetails.getGender()
+        );
+        
+        return ResponseEntity.ok().header("Authorization", jwtCookie)
+                .body(infoResponse);
     }
 
     @PostMapping("/register")
@@ -81,7 +80,12 @@ public class AuthController {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(
+                signUpRequest.getFirstName(),
+                signUpRequest.getLastName(),
+                signUpRequest.getDateOfBirth(),
+                signUpRequest.getGender(),
+                signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
@@ -123,8 +127,7 @@ public class AuthController {
 
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+        return ResponseEntity.ok()
                 .body(new MessageResponse("You've been signed out!"));
     }
 }

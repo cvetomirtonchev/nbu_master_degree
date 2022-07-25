@@ -17,19 +17,30 @@ public class UserDetailsImpl implements UserDetails {
     private Long id;
 
     private String username;
-
     private String email;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String dateOfBirth;
+
+    private String gender;
 
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+
+    public UserDetailsImpl(Long id, String username, String email, String firstName, String lastName, String dateOfBirth, String gender, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
         this.password = password;
         this.authorities = authorities;
     }
@@ -43,6 +54,10 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getDateOfBirth(),
+                user.getGender(),
                 user.getPassword(),
                 authorities);
     }
@@ -51,6 +66,7 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
+
 
     public Long getId() {
         return id;
@@ -83,6 +99,22 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
     @Override

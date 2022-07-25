@@ -5,12 +5,8 @@ import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Component
@@ -22,28 +18,9 @@ public class JwtUtils {
 
     @Value("${findit.app.jwtExpirationMs}")
     private int jwtExpirationMs;
-
-    @Value("${findit.app.jwtCookieName}")
-    private String jwtCookie;
-
-    public String getJwtFromCookies(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-        if (cookie != null) {
-            return cookie.getValue();
-        } else {
-            return null;
-        }
-    }
-
-    public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
-        return cookie;
-    }
-
-    public ResponseCookie getCleanJwtCookie() {
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
-        return cookie;
+    
+    public String generateJwtToken(UserDetailsImpl userPrincipal) {
+        return generateTokenFromUsername(userPrincipal.getUsername());
     }
 
     public String getUserNameFromJwtToken(String token) {

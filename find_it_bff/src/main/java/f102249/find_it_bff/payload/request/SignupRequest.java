@@ -8,6 +8,21 @@ import java.util.Set;
 public class SignupRequest {
     @NotBlank
     @Size(min = 3, max = 20)
+    private String firstName;
+
+    @NotBlank
+    @Size(min = 3, max = 20)
+    private String lastName;
+
+    @NotBlank
+    @Size(max = 20)
+    private String dateOfBirth;
+
+    @NotBlank
+    private String gender;
+
+    @NotBlank
+    @Size(min = 3, max = 20)
     private String username;
 
     @NotBlank
@@ -20,6 +35,38 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDataOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public String getUsername() {
         return username;
