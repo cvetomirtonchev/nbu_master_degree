@@ -7,6 +7,9 @@ buildscript {
         lifecycle_version = '2.6.0-alpha01'
         retrofit_version = '2.9.0'
         coroutines_verison = '1.6.1'
+        okhttp = '4.9.3'
+        okhttp_logging = '4.9.2'
+        data_store_preferences_version = '1.0.0'
     }
 
     repositories {

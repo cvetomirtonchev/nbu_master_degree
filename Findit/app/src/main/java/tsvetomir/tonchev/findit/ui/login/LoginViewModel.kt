@@ -47,6 +47,7 @@ class LoginViewModel @Inject constructor(
                 userRepository.login(username.value.text, password.value.text)
             }.onSuccess {
                 hideLoading()
+                _loginButtonState.emit(Unit)
             }.onFailure {
                 hideLoading()
             }
