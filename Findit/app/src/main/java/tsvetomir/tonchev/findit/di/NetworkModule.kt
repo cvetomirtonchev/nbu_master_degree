@@ -41,6 +41,5 @@ object NetworkModule {
             .create(UserService::class.java)
 
 
-    private const
-    val MOSHI_DEFAULT = "moshiDefault"
+    private const val MOSHI_DEFAULT = "moshiDefault"
 }

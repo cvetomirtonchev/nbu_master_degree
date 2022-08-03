@@ -1,6 +1,5 @@
 package tsvetomir.tonchev.findit.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -236,7 +235,6 @@ fun Buttons(modifier: Modifier, loginViewModel: LoginViewModel = viewModel()) {
         ButtonWithRoundCornerShape(
             title = stringResource(R.string.login_btn),
             onClick = {
-                Log.e("viewModelCom: ", loginViewModel.toString())
                 loginViewModel.onLoginButtonClicked()
             },
             modifier = Modifier

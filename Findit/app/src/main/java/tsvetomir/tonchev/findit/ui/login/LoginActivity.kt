@@ -30,6 +30,7 @@ class LoginActivity : BaseActivity() {
             }
         }
         handleObservers()
+        viewModel.autoLogin()
     }
 
     private fun handleObservers() {

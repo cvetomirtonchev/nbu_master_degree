@@ -19,6 +19,6 @@ interface UserService {
     @POST("api/auth/signout")
     suspend fun logout(): Response<Unit>
 
-    @GET("api/profile")
+    @GET("api/user/profile")
     suspend fun getUser(): User
 }
