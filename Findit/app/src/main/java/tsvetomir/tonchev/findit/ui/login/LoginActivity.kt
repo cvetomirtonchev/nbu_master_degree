@@ -30,13 +30,14 @@ class LoginActivity : BaseActivity() {
             }
         }
         handleObservers()
-        viewModel.autoLogin()
+//        viewModel.autoLogin()
     }
 
     private fun handleObservers() {
         lifecycleScope.launch {
             viewModel.loginButtonState.collectLatest {
                 DashboardActivity.start(this@LoginActivity)
+                finish()
             }
         }
     }

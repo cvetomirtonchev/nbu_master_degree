@@ -55,6 +55,12 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    fun onSkipLoginClicked() {
+        viewModelScope.launch {
+            _loginButtonState.emit(Unit)
+        }
+    }
+
     fun autoLogin() {
         viewModelScope.launch(provideDispatchersProvider.io) {
             runCatching {

@@ -6,23 +6,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -33,9 +26,9 @@ import androidx.navigation.compose.rememberNavController
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.components.ButtonType
 import tsvetomir.tonchev.findit.ui.components.ButtonWithRoundCornerShape
-import tsvetomir.tonchev.findit.ui.components.model.InputDataModel
+import tsvetomir.tonchev.findit.ui.components.InputPasswordValueField
+import tsvetomir.tonchev.findit.ui.components.InputValueField
 import tsvetomir.tonchev.findit.ui.login.LoginViewModel
-import tsvetomir.tonchev.findit.ui.theme.ColorError
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.SecondaryGreen
 
@@ -81,7 +74,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel(), navController: Nav
             loginViewModel = loginViewModel,
             navController = navController)
 
-        Buttons(
+        LoginButtons(
             Modifier
                 .fillMaxWidth()
                 .constrainAs(button) {
@@ -144,81 +137,16 @@ fun UsernamePasswordRegister(
     loginViewModel: LoginViewModel = viewModel(),
     navController: NavHostController
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     Column(modifier = modifier) {
-        TextField(
-            singleLine = true,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.Black,
-                containerColor = Color.White
-            ),
-            label = {
-                Text(
-                    text = stringResource(R.string.username),
-                    style = MaterialTheme.typography.labelSmall
-                )
-            },
-            value = loginViewModel.username.value.text,
-            onValueChange = {
-                loginViewModel.username.value = InputDataModel(text = it)
-            },
-            trailingIcon = {
-                if (!loginViewModel.username.value.inputError.isNullOrEmpty())
-                    Icon(Icons.Filled.Info, "error", tint = ColorError)
-            },
-            textStyle = MaterialTheme.typography.labelMedium,
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(
-                onDone = { keyboardController?.hide() })
+        InputValueField(
+            label = stringResource(R.string.username),
+            inputDataModel = loginViewModel.username
         )
-        if (!loginViewModel.username.value.inputError.isNullOrEmpty()) {
-            Text(
-                text = loginViewModel.username.value.inputError ?: "",
-                color = ColorError,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
-        TextField(
-            singleLine = true,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.Black,
-                containerColor = Color.White
-            ),
-            visualTransformation = PasswordVisualTransformation(),
-            label = {
-                Text(
-                    text = stringResource(R.string.password),
-                    style = MaterialTheme.typography.labelSmall
-                )
-            },
-            value = loginViewModel.password.value.text,
-            onValueChange = {
-                loginViewModel.password.value = InputDataModel(text = it)
-            },
-            textStyle = MaterialTheme.typography.labelMedium,
-            modifier = Modifier
+        InputPasswordValueField(
+            Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp),
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Done,
-                keyboardType = KeyboardType.Password
-            ),
-            trailingIcon = {
-                if (!loginViewModel.password.value.inputError.isNullOrEmpty())
-                    Icon(Icons.Filled.Info, "error", tint = ColorError)
-            },
-            keyboardActions = KeyboardActions(
-                onDone = { keyboardController?.hide() }),
+                .padding(top = 12.dp), stringResource(R.string.password), loginViewModel.password
         )
-        if (!loginViewModel.password.value.inputError.isNullOrEmpty()) {
-            Text(
-                text = loginViewModel.password.value.inputError ?: "",
-                color = ColorError,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
         ButtonWithRoundCornerShape(
             type = ButtonType.TEXT_BUTTON,
             title = stringResource(R.string.register),
@@ -230,7 +158,7 @@ fun UsernamePasswordRegister(
 }
 
 @Composable
-fun Buttons(modifier: Modifier, loginViewModel: LoginViewModel = viewModel()) {
+fun LoginButtons(modifier: Modifier, loginViewModel: LoginViewModel = viewModel()) {
     Column(modifier) {
         ButtonWithRoundCornerShape(
             title = stringResource(R.string.login_btn),
@@ -244,7 +172,9 @@ fun Buttons(modifier: Modifier, loginViewModel: LoginViewModel = viewModel()) {
         ButtonWithRoundCornerShape(
             type = ButtonType.SECONDARY,
             title = stringResource(R.string.skip_login_btn),
-            onClick = {},
+            onClick = {
+                loginViewModel.onSkipLoginClicked()
+            },
             modifier = Modifier
                 .padding(top = 16.dp)
                 .height(42.dp)
