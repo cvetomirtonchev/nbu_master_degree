@@ -61,7 +61,7 @@ fun DrawerHeader() {
         Text(
             text = "Tsvetomir Tonchev",
             fontSize = TextUnit(18F, TextUnitType.Sp),
-            color = Color.Black
+            color = Color.Gray
         )
         Spacer(modifier = Modifier.height(2.dp))
         Text(
@@ -87,7 +87,7 @@ fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerS
 
     NavigationDrawerItem(
         icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-        label = { Text(text = "Home") },
+        label = { Text(text = "Home", style = MaterialTheme.typography.labelMedium) },
         selected = destination?.route == "HomePage",
         onClick = {
             navController.navigate("HomePage", navOptions {
@@ -104,7 +104,12 @@ fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerS
     Spacer(modifier = Modifier.height(10.dp))
     NavigationDrawerItem(
         icon = { Icon(Icons.Filled.Place, "About") },
-        label = { Text(text = "About") },
+        label = {
+            Text(
+                text = "About",
+                style = MaterialTheme.typography.labelMedium
+            )
+        },
         selected = destination?.route == "AboutPage",
         onClick = {
             navController.navigate("AboutPage", navOptions {
@@ -123,7 +128,7 @@ fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerS
 
     NavigationDrawerItem(
         icon = { Icon(Icons.Filled.Settings, "Setting") },
-        label = { Text(text = "Setting") },
+        label = { Text(text = "Setting", style = MaterialTheme.typography.labelMedium) },
         selected = destination?.route == "SettingPage",
         onClick = {
             navController.navigate("SettingPage", navOptions {

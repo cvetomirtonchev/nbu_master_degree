@@ -7,15 +7,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import tsvetomir.tonchev.findit.R
 
 @Composable
 fun AppBar(
+    title: String,
     onNavigationItemClicked: () -> Unit
 ) {
     SmallTopAppBar(title = {
-        Text(text = stringResource(id = R.string.app_name))
+        Text(text = title)
     },
         navigationIcon = {
             IconButton(onClick = onNavigationItemClicked) {
