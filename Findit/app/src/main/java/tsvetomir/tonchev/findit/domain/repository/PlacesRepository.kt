@@ -15,7 +15,7 @@ class PlacesRepository @Inject constructor() {
             listOf(
                 generateFoodAndDrinkTab(),
                 generateMoneyTab(),
-                generateMoveTab(),
+                generateShoppingTab(),
                 generateHotelTab()
             )
 
@@ -60,10 +60,10 @@ class PlacesRepository @Inject constructor() {
                 )
             )
 
-        private fun generateMoveTab(): ExploreModel =
+        private fun generateShoppingTab(): ExploreModel =
             ExploreModel(
-                title = "Move",
-                image = R.drawable.destination,
+                title = "Shopping",
+                image = R.drawable.shopping,
                 placeModels = listOf(
                     PlaceModel(
                         title = "Shopping Malls",

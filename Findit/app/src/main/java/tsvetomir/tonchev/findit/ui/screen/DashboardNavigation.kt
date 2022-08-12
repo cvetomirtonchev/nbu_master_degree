@@ -26,6 +26,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.launch
+import tsvetomir.tonchev.findit.ui.Places
 import tsvetomir.tonchev.findit.ui.components.appcomponents.AppBar
 import tsvetomir.tonchev.findit.ui.components.appcomponents.DrawerContent
 import tsvetomir.tonchev.findit.ui.explore.ExploreScreen
@@ -59,7 +60,7 @@ fun NavigationPage() {
                 }
             }
         }, bottomBar = {
-            NavigationBar() {
+            NavigationBar {
                 BottomNavigation(navController)
             }
 
@@ -78,11 +79,16 @@ fun NavigationPage() {
                     composable("Profile") {
                         ProfileScreen()
                     }
+                    composable("Places") {
+                        Places()
+                    }
+//                    placesNavGraph(navController)
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun BottomNavigation(navController: NavHostController) {
@@ -90,56 +96,64 @@ fun BottomNavigation(navController: NavHostController) {
     val selectedItem = remember { mutableStateOf(0) }
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val parentRouteName = navBackStackEntry.value?.destination?.parent?.route
-    val routeName = navBackStackEntry.value?.destination?.route
 
-    NavigationBar(
-        containerColor = MaterialTheme.colorScheme.primary,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(18.dp, 18.dp, 0.dp, 0.dp))
-    ) {
-        tabItems.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = parentRouteName == item,
-                onClick = {
-                    selectedItem.value = index
-                    navController.navigate(item, navOptions {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+    val bottomBarDestination = tabItems.any { it == parentRouteName }
+
+    if (bottomBarDestination) {
+        NavigationBar(
+            containerColor = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(18.dp, 18.dp, 0.dp, 0.dp))
+        ) {
+            tabItems.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = parentRouteName == item,
+                    onClick = {
+                        selectedItem.value = index
+                        navController.navigate(item, navOptions {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        })
+
+                    },
+                    icon = {
+                        when (item) {
+                            "Explore" -> Icon(
+                                imageVector = Icons.Default.Home,
+                                contentDescription = null,
+                                tint = setSelectedColor(selectedItem.value, index)
+                            )
+                            "Search" -> Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = null,
+                                tint = setSelectedColor(selectedItem.value, index)
+                            )
+
+                            "Liked" -> Icon(
+                                imageVector = Icons.Default.Place,
+                                contentDescription = null,
+                                tint = setSelectedColor(selectedItem.value, index)
+                            )
+
+                            "Profile" -> Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = null,
+                                tint = setSelectedColor(selectedItem.value, index)
+                            )
                         }
-                        launchSingleTop = true
-                        restoreState = true
+
+                    },
+                    label = {
+                        Text(
+                            text = item,
+                            color = setSelectedColor(selectedItem.value, index)
+                        )
                     })
-
-                },
-                icon = {
-                    when (item) {
-                        "Explore" -> Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = null,
-                            tint = setSelectedColor(selectedItem.value, index)
-                        )
-                        "Search" -> Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
-                            tint = setSelectedColor(selectedItem.value, index)
-                        )
-
-                        "Liked" -> Icon(
-                            imageVector = Icons.Default.Place,
-                            contentDescription = null,
-                            tint = setSelectedColor(selectedItem.value, index)
-                        )
-
-                        "Profile" -> Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = null,
-                            tint = setSelectedColor(selectedItem.value, index)
-                        )
-                    }
-
-                },
-                label = { Text(text = item, color = setSelectedColor(selectedItem.value, index)) })
+            }
         }
     }
 }
