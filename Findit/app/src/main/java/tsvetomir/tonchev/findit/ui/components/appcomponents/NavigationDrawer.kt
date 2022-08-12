@@ -5,8 +5,7 @@ package tsvetomir.tonchev.findit.ui.components.appcomponents
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,15 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
 import kotlinx.coroutines.launch
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 
 
-private val screens = listOf(
-    "Profile",
-    "Saved places",
-    "Liked"
+private val navigationMenus = listOf(
+    "Help",
+    "Log out"
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,63 +81,41 @@ fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerS
 
     val destination = currentBackStackEntryAsState.value?.destination
 
+    navigationMenus.forEachIndexed { index, item ->
+        run {
+            NavigationDrawerItem(
+                label = {
+                    Text(
+                        text = navigationMenus[index],
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                },
+                selected = destination?.route == navigationMenus[index],
+                onClick = {
+                    scope.launch {
+                        drawerState.close()
+                    }
+                },
+                modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
+                icon = {
+                    when (item) {
+                        "Help" -> Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                        "Log out" -> Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
 
-    NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
-        label = { Text(text = "Home", style = MaterialTheme.typography.labelMedium) },
-        selected = destination?.route == "HomePage",
-        onClick = {
-            navController.navigate("HomePage", navOptions {
-                this.launchSingleTop = true
-                this.restoreState = true
-
-            })
-            scope.launch {
-                drawerState.close()
-            }
-
-        }, modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-    )
-    Spacer(modifier = Modifier.height(10.dp))
-    NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Place, "About") },
-        label = {
-            Text(
-                text = "About",
-                style = MaterialTheme.typography.labelMedium
+                },
             )
-        },
-        selected = destination?.route == "AboutPage",
-        onClick = {
-            navController.navigate("AboutPage", navOptions {
-                this.launchSingleTop = true
-                this.restoreState = true
-
-            })
-            scope.launch {
-                drawerState.close()
-            }
-        },
-        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-    )
-    Spacer(modifier = Modifier.height(10.dp))
-
-
-    NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Settings, "Setting") },
-        label = { Text(text = "Setting", style = MaterialTheme.typography.labelMedium) },
-        selected = destination?.route == "SettingPage",
-        onClick = {
-            navController.navigate("SettingPage", navOptions {
-                this.launchSingleTop = true
-                this.restoreState = true
-            })
-            scope.launch {
-                drawerState.close()
-            }
-        },
-        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-    )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+    }
 }
 
 @ExperimentalMaterial3Api
