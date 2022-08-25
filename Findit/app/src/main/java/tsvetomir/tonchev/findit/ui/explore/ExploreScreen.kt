@@ -1,6 +1,5 @@
 package tsvetomir.tonchev.findit.ui.explore
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.navigation.compose.rememberNavController
 import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
+import tsvetomir.tonchev.findit.ui.places.PlacesActivity
 import tsvetomir.tonchev.findit.ui.theme.ColorBlackOverlay
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.WhiteColorTransparent
@@ -78,6 +77,7 @@ fun ExploreCard(exploreModel: ExploreModel) {
     }
 }
 
+@ExperimentalMaterial3Api
 @Composable
 fun ExploreCardContent(exploreModel: ExploreModel) {
     ConstraintLayout(
@@ -113,19 +113,16 @@ fun ExploreCardContent(exploreModel: ExploreModel) {
     }
 }
 
+@ExperimentalMaterial3Api
 @Composable
 fun PlaceModel(placeModel: PlaceModel) {
     val context = LocalContext.current
-    val navController = rememberNavController()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(6.dp, 0.dp)
             .clickable {
-                navController.navigate("Places")
-                Toast
-                    .makeText(context, "asd", Toast.LENGTH_SHORT)
-                    .show()
+                PlacesActivity.start(context, placeModel)
             }
     ) {
         Box(

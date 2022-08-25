@@ -15,12 +15,12 @@ import tsvetomir.tonchev.findit.ui.register.RegisterScreen
 fun FindItNavHost(loginViewModel: LoginViewModel = viewModel()) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Routes.Login.route) {
+    NavHost(navController = navController, startDestination = Screens.Login.route) {
 
-        composable(Routes.Login.route) {
+        composable(Screens.Login.route) {
             LoginScreen(navController = navController, loginViewModel = loginViewModel)
         }
-        composable(Routes.Register.route) {
+        composable(Screens.Register.route) {
             RegisterScreen(navController = navController)
         }
     }

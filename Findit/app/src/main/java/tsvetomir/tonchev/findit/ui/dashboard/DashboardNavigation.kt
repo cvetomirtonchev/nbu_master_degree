@@ -1,4 +1,4 @@
-package tsvetomir.tonchev.findit.ui.screen
+package tsvetomir.tonchev.findit.ui.dashboard
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -26,15 +27,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.launch
-import tsvetomir.tonchev.findit.ui.Places
 import tsvetomir.tonchev.findit.ui.components.appcomponents.AppBar
 import tsvetomir.tonchev.findit.ui.components.appcomponents.DrawerContent
 import tsvetomir.tonchev.findit.ui.explore.ExploreScreen
 import tsvetomir.tonchev.findit.ui.liked.LikedScreen
 import tsvetomir.tonchev.findit.ui.profile.ProfileScreen
+import tsvetomir.tonchev.findit.ui.screen.Screens
 import tsvetomir.tonchev.findit.ui.search.SearchScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+const val PLACE_TYPE_EXTRA = "PLACE_TYPE_EXTRA"
+
+@ExperimentalMaterial3Api
+@ExperimentalUnitApi
 @Composable
 fun NavigationPage() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -66,23 +70,19 @@ fun NavigationPage() {
 
         }) {
             Box(modifier = Modifier.padding(it)) {
-                NavHost(navController = navController, startDestination = "Explore") {
-                    composable("Explore") {
+                NavHost(navController = navController, startDestination = Screens.Explore.route) {
+                    composable(Screens.Explore.route) {
                         ExploreScreen()
                     }
-                    composable("Search") {
+                    composable(Screens.Search.route) {
                         SearchScreen()
                     }
-                    composable("Liked") {
+                    composable(Screens.Liked.route) {
                         LikedScreen()
                     }
-                    composable("Profile") {
+                    composable(Screens.Profile.route) {
                         ProfileScreen()
                     }
-                    composable("Places") {
-                        Places()
-                    }
-//                    placesNavGraph(navController)
                 }
             }
         }
@@ -95,7 +95,7 @@ fun BottomNavigation(navController: NavHostController) {
     val tabItems = listOf("Explore", "Search", "Liked", "Profile")
     val selectedItem = remember { mutableStateOf(0) }
     val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val parentRouteName = navBackStackEntry.value?.destination?.parent?.route
+    val parentRouteName = navBackStackEntry.value?.destination?.route
 
     val bottomBarDestination = tabItems.any { it == parentRouteName }
 
@@ -108,7 +108,7 @@ fun BottomNavigation(navController: NavHostController) {
         ) {
             tabItems.forEachIndexed { index, item ->
                 NavigationBarItem(
-                    selected = parentRouteName == item,
+                    selected = false,
                     onClick = {
                         selectedItem.value = index
                         navController.navigate(item, navOptions {

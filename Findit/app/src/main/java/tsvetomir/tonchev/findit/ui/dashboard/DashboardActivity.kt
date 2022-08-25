@@ -9,9 +9,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalUnitApi
+@ExperimentalMaterial3Api
 class DashboardActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

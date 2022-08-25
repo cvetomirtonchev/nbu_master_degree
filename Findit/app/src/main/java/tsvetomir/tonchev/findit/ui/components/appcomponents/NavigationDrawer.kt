@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalUnitApi::class)
-
 package tsvetomir.tonchev.findit.ui.components.appcomponents
 
 import androidx.compose.foundation.layout.*
@@ -29,7 +27,8 @@ private val navigationMenus = listOf(
     "Log out"
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalUnitApi
+@ExperimentalMaterial3Api
 @Composable
 fun DrawerContent(navController: NavHostController, drawerState: DrawerState) {
     Column(
@@ -71,7 +70,7 @@ fun DrawerHeader() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @Composable
 fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerState) {
 
@@ -118,6 +117,7 @@ fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerS
     }
 }
 
+@ExperimentalUnitApi
 @ExperimentalMaterial3Api
 @Preview(showBackground = true)
 @Composable

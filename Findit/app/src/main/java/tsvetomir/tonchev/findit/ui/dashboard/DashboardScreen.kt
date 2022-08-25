@@ -3,15 +3,17 @@ package tsvetomir.tonchev.findit.ui.dashboard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import tsvetomir.tonchev.findit.ui.screen.NavigationPage
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 
+@ExperimentalUnitApi
 @ExperimentalMaterial3Api
 @Composable
 fun DashboardHome() {
     NavigationPage()
 }
 
+@ExperimentalUnitApi
 @ExperimentalMaterial3Api
 @Preview(showBackground = true)
 @Composable

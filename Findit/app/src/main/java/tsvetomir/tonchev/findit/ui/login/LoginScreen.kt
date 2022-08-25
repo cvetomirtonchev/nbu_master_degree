@@ -151,7 +151,7 @@ fun UsernamePasswordRegister(
             type = ButtonType.TEXT_BUTTON,
             title = stringResource(R.string.register),
             onClick = {
-                navController.navigate(Routes.Register.route)
+                navController.navigate(Screens.Register.route)
             },
         )
     }

@@ -4,6 +4,10 @@
     package="tsvetomir.tonchev.findit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        tools:node="remove" />
 
     <application
         android:name=".FindItApp"
@@ -32,6 +36,15 @@
             android:name=".ui.dashboard.DashboardActivity"
             android:label=""
             android:theme="@style/Theme.FindIt" />
+
+        <activity
+            android:name=".ui.places.PlacesActivity"
+            android:label=""
+            android:theme="@style/Theme.FindIt" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY" />
     </application>
 
 </manifest>
