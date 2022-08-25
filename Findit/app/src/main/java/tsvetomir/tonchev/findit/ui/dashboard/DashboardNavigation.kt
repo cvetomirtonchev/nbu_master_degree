@@ -160,7 +160,7 @@ fun BottomNavigation(navController: NavHostController) {
 
 private fun setSelectedColor(selectedValue: Int, currentIndex: Int): Color =
     if (selectedValue == currentIndex) {
-        Color.Gray
-    } else {
         Color.White
+    } else {
+        Color.Gray
     }

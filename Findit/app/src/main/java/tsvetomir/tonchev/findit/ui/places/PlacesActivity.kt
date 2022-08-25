@@ -2,6 +2,8 @@ package tsvetomir.tonchev.findit.ui.places
 
 import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -14,6 +16,8 @@ import tsvetomir.tonchev.findit.ui.base.BaseActivity
 import tsvetomir.tonchev.findit.ui.components.CircularIndeterminateProgressBar
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
+import java.util.*
+
 
 @ExperimentalMaterial3Api
 @AndroidEntryPoint
@@ -31,15 +35,22 @@ class PlacesActivity : BaseActivity() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 location?.let {
-                    viewModel.loadPlacesNearYou(placeModel, location)
+                    viewModel.loadPlacesNearYou(placeModel, location, getCityName(location))
                     setContent {
                         FindItTheme {
-                            PlacesScreen(location, viewModel)
+                            PlacesNavigation(viewModel, location)
                             CircularIndeterminateProgressBar(viewModel)
                         }
                     }
                 }
             }
+    }
+
+    private fun getCityName(location: Location): String {
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses: List<Address> =
+            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        return addresses[0].getAddressLine(0)
     }
 
     companion object {

@@ -3,8 +3,10 @@ package tsvetomir.tonchev.findit.domain.repository
 import android.location.Location
 import tsvetomir.tonchev.findit.BuildConfig
 import tsvetomir.tonchev.findit.R
-import tsvetomir.tonchev.findit.data.network.model.response.nearbyplaces.NearbyPlacesResponse
 import tsvetomir.tonchev.findit.data.network.service.PlacesService
+import tsvetomir.tonchev.findit.domain.mapper.PlacesMapper
+import tsvetomir.tonchev.findit.domain.model.LastSearchModelCache
+import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.explore.ExploreModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceType
@@ -12,19 +14,35 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PlacesRepository @Inject constructor(private val placesService: PlacesService) {
+class PlacesRepository @Inject constructor(
+    private val placesService: PlacesService,
+    private val placesMapper: PlacesMapper
+) {
 
-    suspend fun findAllPlaces(searchType: String, location: Location): NearbyPlacesResponse {
-        val londonLocation = "51.514663%2C-0.087965"
+    private var lastSearchModel: LastSearchModelCache? = null
+
+    suspend fun findAllPlaces(searchType: String, location: Location): List<PlaceUiModel> {
+        if (lastSearchModel != null && isLastSearchMatched(searchType, location)) {
+            lastSearchModel?.let {
+                return it.result
+            }
+        }
         val queryMap = mapOf(
             LOCATION to "${location.latitude}%2C${location.longitude}",
-//            LOCATION to londonLocation,
             RADIUS to "1500",
             TYPE to searchType,
             KEY to BuildConfig.MAPS_KEY
         )
-        return placesService.findNearbyPlaces(queryMap)
+        val mappedResponse =
+            placesMapper.mapNearbyPlacesResponse(placesService.findNearbyPlaces(queryMap))
+        lastSearchModel = LastSearchModelCache(searchType, location, mappedResponse)
+        return mappedResponse
     }
+
+    private fun isLastSearchMatched(searchType: String, location: Location): Boolean =
+        searchType == lastSearchModel?.searchType
+                && location.latitude == lastSearchModel?.location?.latitude
+                && location.longitude == lastSearchModel?.location?.longitude
 
 
     companion object {

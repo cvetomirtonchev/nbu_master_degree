@@ -1,9 +1,11 @@
 package tsvetomir.tonchev.findit.ui.places
 
 import android.location.Location
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
 import tsvetomir.tonchev.findit.ui.base.BaseViewModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
@@ -15,10 +17,11 @@ import javax.inject.Inject
 class PlacesViewModel @Inject constructor(
     private val placesRepository: PlacesRepository,
     private val provideDispatchersProvider: CoroutineDispatchersProvider,
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
 
-    fun loadPlacesNearYou(placeModel: PlaceModel?, location: Location) {
+    val placesUiModelList = mutableStateOf<List<PlaceUiModel>>(emptyList())
+
+    fun loadPlacesNearYou(placeModel: PlaceModel?, location: Location, cityName: String) {
         if (placeModel == null) {
             return
         }
@@ -29,7 +32,10 @@ class PlacesViewModel @Inject constructor(
                     fromPlaceTypeToString(placeModel.placeType),
                     location
                 )
-            }
+            }.onSuccess {
+                hideLoading()
+                placesUiModelList.value = it
+            }.onFailure { hideLoading() }
         }
     }
 }

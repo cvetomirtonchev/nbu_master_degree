@@ -73,7 +73,6 @@ fun ExploreCard(exploreModel: ExploreModel) {
                 ExploreCardContent(exploreModel)
             }
         }
-
     }
 }
 

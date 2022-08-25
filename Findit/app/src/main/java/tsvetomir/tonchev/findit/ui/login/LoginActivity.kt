@@ -7,9 +7,11 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,7 @@ import tsvetomir.tonchev.findit.ui.screen.FindItNavHost
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 
 
+@ExperimentalMaterial3Api
 @ExperimentalComposeUiApi
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -46,6 +49,7 @@ class LoginActivity : BaseActivity() {
             }
         }
 
+    @ExperimentalUnitApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startLocationPermissionRequest()
@@ -80,6 +84,8 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+    @ExperimentalMaterial3Api
+    @ExperimentalUnitApi
     private fun handleObservers() {
         lifecycleScope.launch {
             viewModel.loginButtonState.collectLatest {
