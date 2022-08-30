@@ -12,6 +12,6 @@ sealed class Screens(val route: String) {
     object Profile : Screens("Profile")
 
     //Places
-    object PlacesMap : Screens("PlacesMap")
-    object PlacesList : Screens("PlacesList")
+    object PlacesMap : Screens("Places Map")
+    object PlacesList : Screens("Places List")
 }

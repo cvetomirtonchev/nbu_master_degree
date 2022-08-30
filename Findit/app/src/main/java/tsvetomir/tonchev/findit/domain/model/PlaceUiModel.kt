@@ -10,5 +10,6 @@ data class PlaceUiModel(
     val photos: List<Photo>,
     val rating: Double,
     val address: String,
-    val forDisability: Boolean
+    var forDisability: Boolean,
+    val cityName: String
 )

@@ -1,4 +1,4 @@
-package tsvetomir.tonchev.findit.utils
+package tsvetomir.tonchev.findit.utils.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

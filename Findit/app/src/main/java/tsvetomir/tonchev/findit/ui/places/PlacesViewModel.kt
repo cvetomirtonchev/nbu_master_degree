@@ -30,12 +30,22 @@ class PlacesViewModel @Inject constructor(
             runCatching {
                 placesRepository.findAllPlaces(
                     fromPlaceTypeToString(placeModel.placeType),
-                    location
+                    location,
+                    cityName
                 )
             }.onSuccess {
                 hideLoading()
                 placesUiModelList.value = it
             }.onFailure { hideLoading() }
+        }
+    }
+
+    fun markAsAccessible(placeUiModel: PlaceUiModel) {
+        placeUiModel.forDisability = true
+        placesUiModelList.value = placesUiModelList.value.map {
+            if (placeUiModel.id == it.id) {
+                placeUiModel
+            } else it
         }
     }
 }

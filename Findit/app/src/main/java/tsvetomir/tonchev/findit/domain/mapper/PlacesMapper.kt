@@ -6,7 +6,10 @@ import javax.inject.Inject
 
 class PlacesMapper @Inject constructor() {
 
-    fun mapNearbyPlacesResponse(nearbyPlacesResponse: NearbyPlacesResponse): List<PlaceUiModel> =
+    fun mapNearbyPlacesResponse(
+        nearbyPlacesResponse: NearbyPlacesResponse,
+        cityName: String
+    ): List<PlaceUiModel> =
         nearbyPlacesResponse.results?.map {
             PlaceUiModel(
                 id = it.placeId ?: "",
@@ -16,7 +19,8 @@ class PlacesMapper @Inject constructor() {
                 photos = it.photos ?: emptyList(),
                 rating = it.rating ?: 0.0,
                 address = it.vicinity ?: "",
-                forDisability = false
+                forDisability = false,
+                cityName = cityName
             )
         } ?: emptyList()
 }

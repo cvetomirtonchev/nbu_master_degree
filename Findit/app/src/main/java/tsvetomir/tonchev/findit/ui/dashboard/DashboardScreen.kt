@@ -9,8 +9,8 @@ import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 @ExperimentalUnitApi
 @ExperimentalMaterial3Api
 @Composable
-fun DashboardHome() {
-    NavigationPage()
+fun DashboardHome(viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+    NavigationPage(viewModel)
 }
 
 @ExperimentalUnitApi

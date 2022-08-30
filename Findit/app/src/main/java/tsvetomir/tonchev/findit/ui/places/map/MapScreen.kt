@@ -19,6 +19,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.places.PlacesViewModel
+import tsvetomir.tonchev.findit.utils.datastore.openDirectionsInMaps
 
 @ExperimentalMaterial3Api
 @Composable
@@ -45,11 +46,9 @@ fun MapScreen(location: Location, placesViewModel: PlacesViewModel = viewModel()
                 Marker(
                     state = MarkerState(position = LatLng(placeUiModel.lat, placeUiModel.lng)),
                     title = placeUiModel.name,
-                    snippet = "Click to see the details",
+                    snippet = "Long click to get directions",
                     onInfoWindowLongClick = {
-//                        viewModel.onEvent(
-//                            MapEvent.OnInfoWindowLongClick(spot)
-//                        )
+                        openDirectionsInMaps(context, placeUiModel.lat, placeUiModel.lng)
                     },
                     onClick = {
                         it.showInfoWindow()

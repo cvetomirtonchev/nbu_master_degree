@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import tsvetomir.tonchev.findit.ui.dashboard.DashboardViewModel
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(viewModel: DashboardViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

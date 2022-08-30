@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -13,12 +12,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.places.list.PlacesList
 import tsvetomir.tonchev.findit.ui.places.map.MapScreen
 import tsvetomir.tonchev.findit.ui.screen.Screens
@@ -46,7 +47,7 @@ fun PlacesNavigation(viewModel: PlacesViewModel, location: Location) {
 
 @Composable
 fun TopNavigation(navController: NavHostController) {
-    val tabItems = listOf("PlacesMap", "PlacesList")
+    val tabItems = listOf("Places Map", "Places List")
     val selectedItem = remember { mutableStateOf(0) }
 
     NavigationBar(
@@ -70,12 +71,12 @@ fun TopNavigation(navController: NavHostController) {
                 },
                 icon = {
                     when (item) {
-                        "PlacesMap" -> Icon(
-                            imageVector = Icons.Default.Home,
+                        "Places Map" -> Icon(
+                            painter = painterResource(id = R.drawable.ic_public),
                             contentDescription = null,
                             tint = setSelectedColor(selectedItem.value, index)
                         )
-                        "PlacesList" -> Icon(
+                        "Places List" -> Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
                             tint = setSelectedColor(selectedItem.value, index)

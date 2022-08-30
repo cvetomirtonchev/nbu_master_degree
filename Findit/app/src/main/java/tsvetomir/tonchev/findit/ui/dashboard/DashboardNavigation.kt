@@ -35,12 +35,10 @@ import tsvetomir.tonchev.findit.ui.profile.ProfileScreen
 import tsvetomir.tonchev.findit.ui.screen.Screens
 import tsvetomir.tonchev.findit.ui.search.SearchScreen
 
-const val PLACE_TYPE_EXTRA = "PLACE_TYPE_EXTRA"
-
 @ExperimentalMaterial3Api
 @ExperimentalUnitApi
 @Composable
-fun NavigationPage() {
+fun NavigationPage(viewModel: DashboardViewModel) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
@@ -81,7 +79,7 @@ fun NavigationPage() {
                         LikedScreen()
                     }
                     composable(Screens.Profile.route) {
-                        ProfileScreen()
+                        ProfileScreen(viewModel)
                     }
                 }
             }

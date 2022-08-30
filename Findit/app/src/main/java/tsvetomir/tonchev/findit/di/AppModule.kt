@@ -19,8 +19,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import tsvetomir.tonchev.findit.utils.CoroutineDispatchersProvider
-import tsvetomir.tonchev.findit.utils.PreferenceDataStore
-import tsvetomir.tonchev.findit.utils.PreferenceDataStoreImpl
+import tsvetomir.tonchev.findit.utils.datastore.PreferenceDataStore
+import tsvetomir.tonchev.findit.utils.datastore.PreferenceDataStoreImpl
 import javax.inject.Singleton
 
 @Module

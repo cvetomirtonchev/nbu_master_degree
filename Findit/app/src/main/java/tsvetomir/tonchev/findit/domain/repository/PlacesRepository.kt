@@ -21,7 +21,11 @@ class PlacesRepository @Inject constructor(
 
     private var lastSearchModel: LastSearchModelCache? = null
 
-    suspend fun findAllPlaces(searchType: String, location: Location): List<PlaceUiModel> {
+    suspend fun findAllPlaces(
+        searchType: String,
+        location: Location,
+        cityName: String
+    ): List<PlaceUiModel> {
         if (lastSearchModel != null && isLastSearchMatched(searchType, location)) {
             lastSearchModel?.let {
                 return it.result
@@ -34,7 +38,7 @@ class PlacesRepository @Inject constructor(
             KEY to BuildConfig.MAPS_KEY
         )
         val mappedResponse =
-            placesMapper.mapNearbyPlacesResponse(placesService.findNearbyPlaces(queryMap))
+            placesMapper.mapNearbyPlacesResponse(placesService.findNearbyPlaces(queryMap), cityName)
         lastSearchModel = LastSearchModelCache(searchType, location, mappedResponse)
         return mappedResponse
     }
