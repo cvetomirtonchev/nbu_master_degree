@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -35,6 +36,9 @@ import tsvetomir.tonchev.findit.ui.profile.ProfileScreen
 import tsvetomir.tonchev.findit.ui.screen.Screens
 import tsvetomir.tonchev.findit.ui.search.SearchScreen
 
+val tabItems = listOf("Explore", "Search", "Liked", "Profile")
+
+@ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
 @ExperimentalUnitApi
 @Composable
@@ -90,7 +94,6 @@ fun NavigationPage(viewModel: DashboardViewModel) {
 
 @Composable
 fun BottomNavigation(navController: NavHostController) {
-    val tabItems = listOf("Explore", "Search", "Liked", "Profile")
     val selectedItem = remember { mutableStateOf(0) }
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val parentRouteName = navBackStackEntry.value?.destination?.route

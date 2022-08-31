@@ -10,17 +10,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.ExperimentalUnitApi
+import dagger.hilt.android.AndroidEntryPoint
 import tsvetomir.tonchev.findit.ui.base.BaseActivity
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 
+@ExperimentalComposeUiApi
 @ExperimentalUnitApi
 @ExperimentalMaterial3Api
+@AndroidEntryPoint
 class DashboardActivity : BaseActivity() {
 
     override val viewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.isDisabilityEnabled()
         setContent {
             FindItTheme {
                 DashboardHome(viewModel)

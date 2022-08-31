@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    sessionStorage: SessionStorage,
+    private val sessionStorage: SessionStorage,
     private val localDataStore: LocalDataStore
 ) :
     BaseViewModel() {
@@ -22,5 +22,14 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             isDisabilityEnabledState.value = localDataStore.isDisabilityEnabled()
         }
+    }
+
+    fun setDisabilityState(isEnabled: Boolean) {
+        showLoading()
+        viewModelScope.launch {
+            localDataStore.setDisability(isEnabled)
+        }
+        isDisabilityEnabledState.value = isEnabled
+        hideLoading()
     }
 }
