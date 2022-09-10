@@ -19,9 +19,6 @@ public class SignupRequest {
     private String dateOfBirth;
 
     @NotBlank
-    private String gender;
-
-    @NotBlank
     @Size(min = 3, max = 20)
     private String username;
 
@@ -42,14 +39,6 @@ public class SignupRequest {
 
     public void setDataOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getFirstName() {

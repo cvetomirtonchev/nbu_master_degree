@@ -10,15 +10,12 @@ public class UserInfoResponse {
 
     private String dateOfBirth;
 
-    private String gender;
-
-    public UserInfoResponse(String username, String email, String firstName, String lastName, String dateOfBirth, String gender) {
+    public UserInfoResponse(String username, String email, String firstName, String lastName, String dateOfBirth) {
         this.username = username;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
     }
 
     public String getEmail() {
@@ -47,9 +44,5 @@ public class UserInfoResponse {
 
     public String getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
     }
 }

@@ -38,8 +38,7 @@ public class ProfileController {
                 userDetails.getEmail(),
                 userDetails.getFirstName(),
                 userDetails.getLastName(),
-                userDetails.getDateOfBirth(),
-                userDetails.getGender()
+                userDetails.getDateOfBirth()
         );
 
         return ResponseEntity.ok().body(infoResponse);

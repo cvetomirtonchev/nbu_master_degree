@@ -30,9 +30,6 @@ public class User {
     private String dateOfBirth;
 
     @NotBlank
-    private String gender;
-
-    @NotBlank
     @Size(max = 20)
     private String username;
 
@@ -54,11 +51,10 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String dateOfBirth, String gender, String username, String email, String password) {
+    public User(String firstName, String lastName, String dateOfBirth, String username, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -74,10 +70,6 @@ public class User {
 
     public String getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
     }
 
     public Long getId() {
