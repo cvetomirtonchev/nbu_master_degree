@@ -5,8 +5,8 @@ import f102249.find_it_bff.models.Role;
 import f102249.find_it_bff.models.User;
 import f102249.find_it_bff.payload.request.LoginRequest;
 import f102249.find_it_bff.payload.request.SignupRequest;
+import f102249.find_it_bff.payload.response.LoginResponse;
 import f102249.find_it_bff.payload.response.MessageResponse;
-import f102249.find_it_bff.payload.response.UserInfoResponse;
 import f102249.find_it_bff.repository.RoleRepository;
 import f102249.find_it_bff.repository.UserRepository;
 import f102249.find_it_bff.security.jwt.JwtUtils;
@@ -54,19 +54,11 @@ public class AuthController {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        String jwtCookie = jwtUtils.generateJwtToken(userDetails);
+        String jwtToken = jwtUtils.generateJwtToken(userDetails);
 
-        UserInfoResponse infoResponse = new UserInfoResponse(
-                userDetails.getUsername(),
-                userDetails.getEmail(),
-                userDetails.getFirstName(),
-                userDetails.getLastName(),
-                userDetails.getDateOfBirth(),
-                userDetails.getGender()
-        );
-        
-        return ResponseEntity.ok().header("Authorization", jwtCookie)
-                .body(infoResponse);
+        LoginResponse loginResponse = new LoginResponse(jwtToken);
+
+        return ResponseEntity.ok().body(loginResponse);
     }
 
     @PostMapping("/register")
