@@ -10,4 +10,9 @@
     <string name="register">Register</string>
     <string name="empty_username_error">Username cannot be empty</string>
     <string name="empty_password_error">Password cannot be empty</string>
+    <string name="field_empty_error">Field cannot be empty</string>
+    <string name="cancel">Cancel</string>
+    <string name="profile_settings">Profile settings</string>
+    <string name="accessability">Accessibility</string>
+    <string name="login_msg">Place login to unlock full Profile tab</string>
 </resources>

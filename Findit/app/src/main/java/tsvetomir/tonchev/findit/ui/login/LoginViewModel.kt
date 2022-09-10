@@ -24,8 +24,9 @@ class LoginViewModel @Inject constructor(
     private val _loginButtonState = MutableSharedFlow<Unit>()
     val loginButtonState: SharedFlow<Unit> = _loginButtonState
 
-    var username = mutableStateOf(InputDataModel())
-    var password = mutableStateOf(InputDataModel())
+    //TODO remove hardcoded values
+    var username = mutableStateOf(InputDataModel(text = "cvetomir5"))
+    var password = mutableStateOf(InputDataModel(text = "123456"))
 
     fun onLoginButtonClicked() {
         when {
@@ -47,6 +48,26 @@ class LoginViewModel @Inject constructor(
                 userRepository.login(username.value.text, password.value.text)
             }.onSuccess {
                 hideLoading()
+                _loginButtonState.emit(Unit)
+            }.onFailure {
+                hideLoading()
+            }
+        }
+    }
+
+    fun onSkipLoginClicked() {
+        viewModelScope.launch {
+            _loginButtonState.emit(Unit)
+        }
+    }
+
+    fun autoLogin() {
+        viewModelScope.launch(provideDispatchersProvider.io) {
+            runCatching {
+                userRepository.loadUserProfile()
+            }.onSuccess {
+                hideLoading()
+                _loginButtonState.emit(Unit)
             }.onFailure {
                 hideLoading()
             }

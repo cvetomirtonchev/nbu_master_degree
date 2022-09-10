@@ -24,14 +24,7 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryGreen,
     secondary = SecondaryGreen,
-    tertiary = WhiteColor,
-//    background = Color(0xFFFFFBFE),
-//    surface = Color(0xFFFFFBFE),
-//    onPrimary = Color.White,
-//    onSecondary = Color.White,
-//    onTertiary = Color.White,
-//    onBackground = Color(0xFF1C1B1F),
-//    onSurface = Color(0xFF1C1B1F),
+    tertiary = WhiteColor
 )
 val fonts = FontFamily(
     Font(R.font.inter_bold, FontWeight.Bold),
