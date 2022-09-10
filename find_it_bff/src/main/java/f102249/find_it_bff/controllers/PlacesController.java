@@ -22,7 +22,7 @@ public class PlacesController {
     @Autowired
     PlaceRepository placeRepository;
 
-    @GetMapping("/place")
+    @GetMapping("/all")
     public ResponseEntity<List<PlaceResponse>> getAllPlaces(@RequestParam String city, HttpServletRequest request) {
         List<PlaceResponse> placeList = placeRepository.findAllByCity(city).stream().map(place -> new PlaceResponse(
                 place.getPlaceId(), place.getLat(), place.getLng(), place.getName(), place.getRating(), place.getAddress(), place.getCity()
