@@ -27,10 +27,13 @@ public class Place {
     @NotBlank
     private String city;
 
+    @NotBlank
+    private String placeType;
+
     public Place() {
     }
 
-    public Place(String placeId, Double lat, Double lng, String name, Double rating, String address, String city) {
+    public Place(String placeId, Double lat, Double lng, String name, Double rating, String address, String city, String placeType) {
         this.placeId = placeId;
         this.lat = lat;
         this.lng = lng;
@@ -38,6 +41,7 @@ public class Place {
         this.rating = rating;
         this.address = address;
         this.city = city;
+        this.placeType = placeType;
     }
 
     public Integer getId() {
@@ -70,5 +74,9 @@ public class Place {
 
     public String getCity() {
         return city;
+    }
+
+    public String getPlaceType() {
+        return placeType;
     }
 }

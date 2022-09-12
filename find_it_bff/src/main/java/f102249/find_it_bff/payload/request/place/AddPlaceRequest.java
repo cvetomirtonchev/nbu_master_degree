@@ -21,6 +21,17 @@ public class AddPlaceRequest {
     @NotBlank
     private String city;
 
+    @NotBlank
+    private String placeType;
+
+    public String getPlaceType() {
+        return placeType;
+    }
+
+    public void setPlaceType(String placeType) {
+        this.placeType = placeType;
+    }
+
     public String getPlaceId() {
         return placeId;
     }

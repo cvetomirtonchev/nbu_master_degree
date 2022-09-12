@@ -23,10 +23,12 @@ public class PlacesController {
     PlaceRepository placeRepository;
 
     @GetMapping("/all")
-    public ResponseEntity<List<PlaceResponse>> getAllPlaces(@RequestParam String city, HttpServletRequest request) {
-        List<PlaceResponse> placeList = placeRepository.findAllByCity(city).stream().map(place -> new PlaceResponse(
-                place.getPlaceId(), place.getLat(), place.getLng(), place.getName(), place.getRating(), place.getAddress(), place.getCity()
-        )).collect(Collectors.toList());
+    public ResponseEntity<List<PlaceResponse>> getAllPlaces(@RequestParam String city, @RequestParam String placeType, HttpServletRequest request) {
+        List<PlaceResponse> placeList = placeRepository.findAllByCity(city).stream()
+                .filter(place -> place.getPlaceType().equals(placeType))
+                .map(place -> new PlaceResponse(
+                        place.getPlaceId(), place.getLat(), place.getLng(), place.getName(), place.getRating(), place.getAddress(), place.getCity()
+                )).collect(Collectors.toList());
 
         return ResponseEntity.ok(placeList);
     }
@@ -38,7 +40,7 @@ public class PlacesController {
         if (foundedPlace.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
-        Place place = new Place(placeRequest.getPlaceId(), placeRequest.getLat(), placeRequest.getLng(), placeRequest.getName(), placeRequest.getRating(), placeRequest.getAddress(), placeRequest.getCity());
+        Place place = new Place(placeRequest.getPlaceId(), placeRequest.getLat(), placeRequest.getLng(), placeRequest.getName(), placeRequest.getRating(), placeRequest.getAddress(), placeRequest.getCity(), placeRequest.getPlaceType());
 
         placeRepository.save(place);
         return ResponseEntity.ok("Success");
