@@ -23,7 +23,6 @@ class RegisterViewModel @Inject constructor(
     var lastName = mutableStateOf(InputDataModel())
     var email = mutableStateOf(InputDataModel())
     var username = mutableStateOf(InputDataModel())
-    var gender = mutableStateOf(InputDataModel())
     var dateOfBirth = mutableStateOf(InputDataModel())
     var password = mutableStateOf(InputDataModel())
 
@@ -42,7 +41,6 @@ class RegisterViewModel @Inject constructor(
                 lastName = lastName.value.text,
                 email = email.value.text,
                 username = username.value.text,
-                gender = gender.value.text,
                 dateOfBirth = dateOfBirth.value.text,
                 password = password.value.text,
             )
@@ -81,11 +79,6 @@ class RegisterViewModel @Inject constructor(
             }
             dateOfBirth.value.text.isEmpty() -> {
                 dateOfBirth.value =
-                    InputDataModel(text = "", resources.getString(R.string.field_empty_error))
-                return false
-            }
-            gender.value.text.isEmpty() -> {
-                gender.value =
                     InputDataModel(text = "", resources.getString(R.string.field_empty_error))
                 return false
             }

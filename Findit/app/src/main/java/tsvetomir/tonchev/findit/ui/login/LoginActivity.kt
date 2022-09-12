@@ -3,7 +3,6 @@ package tsvetomir.tonchev.findit.ui.login
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -34,19 +33,7 @@ class LoginActivity : BaseActivity() {
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
-            it.forEach { permission ->
-                if (permission.value) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
-                } else {
-                    // TODO Show screen to enable location
-                    Toast.makeText(
-                        this,
-                        "Place enable location to be able to use the app",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
+            // not action needed for this moment
         }
 
     @ExperimentalUnitApi

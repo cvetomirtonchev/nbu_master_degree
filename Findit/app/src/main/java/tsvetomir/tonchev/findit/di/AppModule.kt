@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.room.Room
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import dagger.Module
@@ -18,6 +19,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import tsvetomir.tonchev.findit.data.database.AppDatabase
 import tsvetomir.tonchev.findit.utils.CoroutineDispatchersProvider
 import tsvetomir.tonchev.findit.utils.datastore.PreferenceDataStore
 import tsvetomir.tonchev.findit.utils.datastore.PreferenceDataStoreImpl
@@ -61,4 +63,14 @@ object AppModule {
     @Singleton
     fun providePlacesClient(@ApplicationContext appContext: Context): PlacesClient =
         Places.createClient(appContext)
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            "FindItDatabase"
+        ).build()
+    }
 }

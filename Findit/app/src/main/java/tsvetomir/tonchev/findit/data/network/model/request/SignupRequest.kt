@@ -15,8 +15,6 @@ data class SignupRequest(
     val lastName: String,
     @Json(name = "dateOfBirth")
     val dateOfBirth: String,
-    @Json(name = "gender")
-    val gender: String,
     @Json(name = "password")
     val password: String
 )

@@ -50,7 +50,7 @@ class PlacesActivity : BaseActivity() {
         val geocoder = Geocoder(this, Locale.getDefault())
         val addresses: List<Address> =
             geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        return addresses[0].getAddressLine(0)
+        return addresses[0].locality
     }
 
     companion object {

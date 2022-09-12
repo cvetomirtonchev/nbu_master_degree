@@ -1,14 +1,35 @@
 package tsvetomir.tonchev.findit.domain.mapper
 
+import tsvetomir.tonchev.findit.data.network.model.response.PlacesResponse
 import tsvetomir.tonchev.findit.data.network.model.response.nearbyplaces.NearbyPlacesResponse
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import javax.inject.Inject
 
 class PlacesMapper @Inject constructor() {
 
+    fun mapPlacesFromLocalApi(
+        placesResponse: List<PlacesResponse>,
+        placeType: String
+    ): List<PlaceUiModel> =
+        placesResponse.map {
+            PlaceUiModel(
+                id = it.placeId,
+                lat = it.lat,
+                lng = it.lng,
+                name = it.name,
+                photos = emptyList(),
+                rating = it.rating,
+                address = it.address,
+                forDisability = true,
+                cityName = it.city,
+                placeType = placeType
+            )
+        }
+
     fun mapNearbyPlacesResponse(
         nearbyPlacesResponse: NearbyPlacesResponse,
-        cityName: String
+        cityName: String,
+        placeType: String
     ): List<PlaceUiModel> =
         nearbyPlacesResponse.results?.map {
             PlaceUiModel(
@@ -20,7 +41,8 @@ class PlacesMapper @Inject constructor() {
                 rating = it.rating ?: 0.0,
                 address = it.vicinity ?: "",
                 forDisability = false,
-                cityName = cityName
+                cityName = cityName,
+                placeType = placeType
             )
         } ?: emptyList()
 }

@@ -14,7 +14,5 @@ class User(
     @Json(name = "lastName")
     val lastName: String,
     @Json(name = "dateOfBirth")
-    val dateOfBirth: String,
-    @Json(name = "gender")
-    val gender: String
+    val dateOfBirth: String
 )

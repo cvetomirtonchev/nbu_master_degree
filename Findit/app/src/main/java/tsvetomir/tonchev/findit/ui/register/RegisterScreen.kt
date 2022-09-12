@@ -77,9 +77,6 @@ fun RegisterScreen(
             DateOfBirthFiled("Date of birth", registerViewModel.dateOfBirth)
             Spacer(modifier = Modifier.padding(top = 12.dp))
 
-            InputValueField("Gender", registerViewModel.gender)
-            Spacer(modifier = Modifier.padding(top = 12.dp))
-
             InputPasswordValueField(
                 Modifier
                     .fillMaxWidth(),

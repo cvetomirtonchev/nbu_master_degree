@@ -179,7 +179,7 @@ fun HeaderProfile(user: User) {
 @Composable
 fun ProfileScreenPreview() {
     FindItTheme {
-        val user = User("tsvetomir1", "johndoe@mail.com", "John", "Doe", "19.02.1996", "male")
+        val user = User("tsvetomir1", "johndoe@mail.com", "John", "Doe", "19.02.1996")
         ProfileCard(user)
     }
 }

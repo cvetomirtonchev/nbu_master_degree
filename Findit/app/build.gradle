@@ -21,13 +21,20 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+            }
+        }
     }
-
     buildTypes {
         release {
             minifyEnabled false
             buildConfigField("String", "MAPS_KEY", "${MAPS_API_KEY}")
-            buildConfigField("String", "BASE_URL", '"http://192.168.1.7:8080/"')
+            buildConfigField("String", "BASE_URL", '"http://192.168.1.8:8080/"')
             buildConfigField("int", "CONNECT_TIMEOUT", "15")
             buildConfigField("int", "READ_TIMEOUT", "30")
             buildConfigField("int", "WRITE_TIMEOUT", "15")
@@ -37,7 +44,7 @@ android {
             debuggable true
             signingConfig signingConfigs.debug
             buildConfigField("String", "MAPS_KEY", "${MAPS_API_KEY}")
-            buildConfigField("String", "BASE_URL", '"http://192.168.1.7:8080/"')
+            buildConfigField("String", "BASE_URL", '"http://192.168.1.8:8080/"')
             buildConfigField("int", "CONNECT_TIMEOUT", "15")
             buildConfigField("int", "READ_TIMEOUT", "30")
             buildConfigField("int", "WRITE_TIMEOUT", "15")
@@ -119,6 +126,10 @@ dependencies {
 
     // Places API
     implementation 'com.google.android.libraries.places:places:2.6.0'
+
+    // Room
+    implementation "androidx.room:room-runtime:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

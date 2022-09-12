@@ -47,5 +47,11 @@ class PlacesViewModel @Inject constructor(
                 placeUiModel
             } else it
         }
+        showLoading()
+        viewModelScope.launch(provideDispatchersProvider.io) {
+            runCatching { placesRepository.addAccessiblePlace(placeUiModel) }
+                .onSuccess { hideLoading() }
+                .onFailure { hideLoading() }
+        }
     }
 }

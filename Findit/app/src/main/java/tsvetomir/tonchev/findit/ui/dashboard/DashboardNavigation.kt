@@ -6,9 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -31,12 +30,11 @@ import kotlinx.coroutines.launch
 import tsvetomir.tonchev.findit.ui.components.appcomponents.AppBar
 import tsvetomir.tonchev.findit.ui.components.appcomponents.DrawerContent
 import tsvetomir.tonchev.findit.ui.explore.ExploreScreen
-import tsvetomir.tonchev.findit.ui.liked.LikedScreen
+import tsvetomir.tonchev.findit.ui.history.HistoryScreen
 import tsvetomir.tonchev.findit.ui.profile.ProfileScreen
 import tsvetomir.tonchev.findit.ui.screen.Screens
-import tsvetomir.tonchev.findit.ui.search.SearchScreen
 
-val tabItems = listOf("Explore", "Search", "Liked", "Profile")
+val tabItems = listOf("Explore", "History", "Profile")
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
@@ -76,11 +74,8 @@ fun NavigationPage(viewModel: DashboardViewModel) {
                     composable(Screens.Explore.route) {
                         ExploreScreen()
                     }
-                    composable(Screens.Search.route) {
-                        SearchScreen()
-                    }
-                    composable(Screens.Liked.route) {
-                        LikedScreen()
+                    composable(Screens.History.route) {
+                        HistoryScreen()
                     }
                     composable(Screens.Profile.route) {
                         ProfileScreen(viewModel)
@@ -128,25 +123,17 @@ fun BottomNavigation(navController: NavHostController) {
                                 contentDescription = null,
                                 tint = setSelectedColor(selectedItem.value, index)
                             )
-                            "Search" -> Icon(
-                                imageVector = Icons.Default.Search,
+                            "History" -> Icon(
+                                imageVector = Icons.Default.Menu,
                                 contentDescription = null,
                                 tint = setSelectedColor(selectedItem.value, index)
                             )
-
-                            "Liked" -> Icon(
-                                imageVector = Icons.Default.Place,
-                                contentDescription = null,
-                                tint = setSelectedColor(selectedItem.value, index)
-                            )
-
                             "Profile" -> Icon(
                                 imageVector = Icons.Default.Person,
                                 contentDescription = null,
                                 tint = setSelectedColor(selectedItem.value, index)
                             )
                         }
-
                     },
                     label = {
                         Text(

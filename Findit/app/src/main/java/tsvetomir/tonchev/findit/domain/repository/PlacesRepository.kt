@@ -1,52 +1,126 @@
 package tsvetomir.tonchev.findit.domain.repository
 
 import android.location.Location
+import retrofit2.Response
 import tsvetomir.tonchev.findit.BuildConfig
 import tsvetomir.tonchev.findit.R
+import tsvetomir.tonchev.findit.data.database.AppDatabase
+import tsvetomir.tonchev.findit.data.database.entity.SearchHistoryEntity
+import tsvetomir.tonchev.findit.data.network.model.request.AddPlaceRequest
+import tsvetomir.tonchev.findit.data.network.model.request.SearchEventRequest
+import tsvetomir.tonchev.findit.data.network.service.PlacesGoogleService
 import tsvetomir.tonchev.findit.data.network.service.PlacesService
+import tsvetomir.tonchev.findit.data.network.service.TrackingService
 import tsvetomir.tonchev.findit.domain.mapper.PlacesMapper
 import tsvetomir.tonchev.findit.domain.model.LastSearchModelCache
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.explore.ExploreModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceType
+import tsvetomir.tonchev.findit.utils.datastore.LocalDataStore
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PlacesRepository @Inject constructor(
+    private val placesGoogleService: PlacesGoogleService,
+    private val placesMapper: PlacesMapper,
+    private val database: AppDatabase,
+    private val dataStore: LocalDataStore,
     private val placesService: PlacesService,
-    private val placesMapper: PlacesMapper
+    private val trackingService: TrackingService
 ) {
 
     private var lastSearchModel: LastSearchModelCache? = null
+
+    suspend fun addAccessiblePlace(placeUiModel: PlaceUiModel): Response<Void> =
+        placesService.addAccessiblePlace(
+            AddPlaceRequest(
+                placeId = placeUiModel.id,
+                lat = placeUiModel.lat,
+                lng = placeUiModel.lng,
+                name = placeUiModel.name,
+                rating = placeUiModel.rating,
+                address = placeUiModel.address,
+                city = placeUiModel.cityName,
+                placeType = placeUiModel.placeType
+            )
+        )
 
     suspend fun findAllPlaces(
         searchType: String,
         location: Location,
         cityName: String
     ): List<PlaceUiModel> {
-        if (lastSearchModel != null && isLastSearchMatched(searchType, location)) {
+        saveLastSearch(searchType, cityName)
+        trackSearch(searchType, cityName)
+        val isDisabilityEnabled = dataStore.isDisabilityEnabled()
+
+        if (lastSearchModel != null && isLastSearchMatched(
+                searchType,
+                location,
+                isDisabilityEnabled
+            )
+        ) {
             lastSearchModel?.let {
                 return it.result
             }
         }
+        val places: List<PlaceUiModel> = if (isDisabilityEnabled) {
+            placesMapper.mapPlacesFromLocalApi(
+                placesService.findNearbyPlaces(
+                    cityName,
+                    searchType
+                ),
+                searchType
+            )
+        } else {
+            findAllPlacesFromGoogle(searchType, location, cityName)
+        }
+        lastSearchModel =
+            LastSearchModelCache(isDisabilityEnabled, searchType, location, places)
+        return places
+    }
+
+    private suspend fun trackSearch(searchType: String, cityName: String): Response<Void> =
+        trackingService.trackSearchEvent(SearchEventRequest(searchType, cityName))
+
+    private suspend fun findAllPlacesFromGoogle(
+        searchType: String,
+        location: Location,
+        cityName: String,
+    ): List<PlaceUiModel> {
         val queryMap = mapOf(
             LOCATION to "${location.latitude}%2C${location.longitude}",
             RADIUS to "1500",
             TYPE to searchType,
             KEY to BuildConfig.MAPS_KEY
         )
-        val mappedResponse =
-            placesMapper.mapNearbyPlacesResponse(placesService.findNearbyPlaces(queryMap), cityName)
-        lastSearchModel = LastSearchModelCache(searchType, location, mappedResponse)
-        return mappedResponse
+        return placesMapper.mapNearbyPlacesResponse(
+            placesGoogleService.findNearbyPlaces(queryMap),
+            cityName,
+            searchType
+        )
     }
 
-    private fun isLastSearchMatched(searchType: String, location: Location): Boolean =
+    private fun saveLastSearch(searchType: String, cityName: String) {
+        val allSearches = database.searchDao().getSearchHistory()
+        if (allSearches.size >= 10) {
+            database.searchDao().deleteSearchHistory(allSearches[0])
+        }
+        database.searchDao()
+            .insertSearchHistory(SearchHistoryEntity(searchType = searchType, city = cityName))
+    }
+
+    private fun isLastSearchMatched(
+        searchType: String,
+        location: Location,
+        isDisabilityEnabled: Boolean
+    ): Boolean =
         searchType == lastSearchModel?.searchType
                 && location.latitude == lastSearchModel?.location?.latitude
                 && location.longitude == lastSearchModel?.location?.longitude
+                && isDisabilityEnabled == lastSearchModel?.isAccessibleEnabled
 
 
     companion object {

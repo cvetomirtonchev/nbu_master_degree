@@ -7,8 +7,7 @@ sealed class Screens(val route: String) {
 
     //Dashboard
     object Explore : Screens("Explore")
-    object Search : Screens("Search")
-    object Liked : Screens("Liked")
+    object History : Screens("History")
     object Profile : Screens("Profile")
 
     //Places

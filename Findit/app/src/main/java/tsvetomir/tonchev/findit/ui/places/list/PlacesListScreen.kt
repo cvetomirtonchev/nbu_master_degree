@@ -192,7 +192,8 @@ fun PlaceItemPreview() {
                 2.9,
                 "Mladost 1, Sofia",
                 false,
-                "Sofia"
+                "Sofia",
+                "type"
             )
         )
     }
