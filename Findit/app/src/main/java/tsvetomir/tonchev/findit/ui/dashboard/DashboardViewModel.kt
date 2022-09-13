@@ -3,6 +3,8 @@ package tsvetomir.tonchev.findit.ui.dashboard
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
 import tsvetomir.tonchev.findit.ui.base.BaseViewModel
@@ -15,12 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    sessionStorage: SessionStorage,
+    private val sessionStorage: SessionStorage,
     private val localDataStore: LocalDataStore,
     private val placesRepository: PlacesRepository,
     private val dispatcher: CoroutineDispatchersProvider
-) :
-    BaseViewModel() {
+) : BaseViewModel() {
+    private val _logoutButtonState = MutableSharedFlow<Unit>()
+    val logoutButtonState: SharedFlow<Unit> = _logoutButtonState
+
     val userMutableState = mutableStateOf(sessionStorage.user)
     val isDisabilityEnabledState = mutableStateOf(false)
     val searchHistoryMutableState = mutableStateOf<List<HistoryUiModel>>(emptyList())
@@ -45,6 +49,16 @@ class DashboardViewModel @Inject constructor(
             searchHistoryMutableState.value = placesRepository.getSearchHistory().map {
                 HistoryUiModel(fromStringToPlaceType(it.searchType), it.city)
             }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch(dispatcher.io) {
+            placesRepository.clearSearchHistory()
+            sessionStorage.user = null
+            localDataStore.removeSessionToken()
+            localDataStore.setDisability(false)
+            _logoutButtonState.emit(Unit)
         }
     }
 }

@@ -21,14 +21,32 @@ import tsvetomir.tonchev.findit.utils.datastore.fromPlaceTypeToString
 @Composable
 fun HistoryScreen(viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     viewModel.getSearchHistory()
-    val historyModel: List<HistoryUiModel> = viewModel.searchHistoryMutableState.value
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-    ) {
-        items(historyModel) { item ->
-            HistoryElement(item)
+    val historyList: List<HistoryUiModel> = viewModel.searchHistoryMutableState.value
+    if (historyList.isEmpty()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "No search history",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color.White
+            )
+        }
+
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            items(historyList) { item ->
+                HistoryElement(item)
+            }
         }
     }
 }

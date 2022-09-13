@@ -48,7 +48,7 @@ fun NavigationPage(viewModel: DashboardViewModel) {
     val routeName = navBackStackEntry.value?.destination?.route ?: ""
 
     ModalNavigationDrawer(
-        drawerContent = { DrawerContent(navController, drawerState) },
+        drawerContent = { DrawerContent(navController, drawerState, viewModel) },
         drawerState = drawerState
     ) {
         Scaffold(topBar = {

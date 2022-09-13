@@ -84,6 +84,10 @@ class PlacesRepository @Inject constructor(
 
     fun getSearchHistory(): List<SearchHistoryEntity> = database.searchDao().getSearchHistory()
 
+    fun clearSearchHistory() {
+        database.searchDao().delete()
+    }
+
     private suspend fun trackSearch(searchType: String, cityName: String): Response<Void> =
         trackingService.trackSearchEvent(SearchEventRequest(searchType, cityName))
 

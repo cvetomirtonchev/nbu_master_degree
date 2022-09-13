@@ -1,6 +1,8 @@
 package tsvetomir.tonchev.findit.ui.login
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -46,7 +48,7 @@ class LoginActivity : BaseActivity() {
             }
         }
         handleObservers()
-//        viewModel.autoLogin()
+        viewModel.autoLogin()
     }
 
     private fun startLocationPermissionRequest() {
@@ -80,6 +82,11 @@ class LoginActivity : BaseActivity() {
                 finish()
             }
         }
+    }
+
+    companion object {
+        fun start(activity: Activity) =
+            activity.startActivity(Intent(activity, LoginActivity::class.java))
     }
 }
 

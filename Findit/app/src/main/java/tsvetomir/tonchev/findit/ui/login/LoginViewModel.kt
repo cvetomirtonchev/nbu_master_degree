@@ -23,10 +23,9 @@ class LoginViewModel @Inject constructor(
 
     private val _loginButtonState = MutableSharedFlow<Unit>()
     val loginButtonState: SharedFlow<Unit> = _loginButtonState
-
-    //TODO remove hardcoded values
-    var username = mutableStateOf(InputDataModel(text = "cvetomir"))
-    var password = mutableStateOf(InputDataModel(text = "123456"))
+    
+    var username = mutableStateOf(InputDataModel(text = ""))
+    var password = mutableStateOf(InputDataModel(text = ""))
 
     fun onLoginButtonClicked() {
         when {

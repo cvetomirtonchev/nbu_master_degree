@@ -19,6 +19,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
+import tsvetomir.tonchev.findit.data.network.model.response.User
+import tsvetomir.tonchev.findit.ui.dashboard.DashboardViewModel
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 
 
@@ -30,38 +32,50 @@ private val navigationMenus = listOf(
 @ExperimentalUnitApi
 @ExperimentalMaterial3Api
 @Composable
-fun DrawerContent(navController: NavHostController, drawerState: DrawerState) {
+fun DrawerContent(
+    navController: NavHostController,
+    drawerState: DrawerState,
+    viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+    val user: User? = viewModel.userMutableState.value
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        DrawerHeader()
-        Spacer(modifier = Modifier.height(12.dp))
-        Divider(color = Color.LightGray)
-        Spacer(modifier = Modifier.height(12.dp))
-        NavigationDrawerItems(navController, drawerState)
-        Spacer(modifier = Modifier.weight(1f))
+        user?.let {
+            DrawerHeader(it)
+            Spacer(modifier = Modifier.height(12.dp))
+            Divider(color = Color.LightGray)
+            Spacer(modifier = Modifier.height(12.dp))
+            NavigationDrawerItems(navController, drawerState, viewModel)
+            Spacer(modifier = Modifier.weight(1f))
+        } ?: run {
+            Text(
+                text = "Place log in",
+                fontSize = TextUnit(18F, TextUnitType.Sp),
+                color = Color.White
+            )
+        }
     }
 }
 
 @ExperimentalUnitApi
 @Composable
-fun DrawerHeader() {
+fun DrawerHeader(user: User) {
     Column(
         modifier = Modifier
             .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
-            text = "Tsvetomir Tonchev",
+            text = "${user.firstName} ${user.lastName}",
             fontSize = TextUnit(18F, TextUnitType.Sp),
             color = Color.Gray
         )
         Spacer(modifier = Modifier.height(2.dp))
         Text(
-            text = "tsvetomir@gmail.com",
+            text = user.email,
             fontSize = TextUnit(14F, TextUnitType.Sp),
             color = Color.Gray
         )
@@ -72,7 +86,11 @@ fun DrawerHeader() {
 
 @ExperimentalMaterial3Api
 @Composable
-fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerState) {
+fun NavigationDrawerItems(
+    navController: NavHostController,
+    drawerState: DrawerState,
+    viewModel: DashboardViewModel
+) {
 
     val scope = rememberCoroutineScope()
 
@@ -93,6 +111,9 @@ fun NavigationDrawerItems(navController: NavHostController, drawerState: DrawerS
                 onClick = {
                     scope.launch {
                         drawerState.close()
+                    }
+                    if (item == "Log out") {
+                        viewModel.logout()
                     }
                 },
                 modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
