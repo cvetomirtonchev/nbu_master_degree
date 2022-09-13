@@ -75,7 +75,7 @@ fun NavigationPage(viewModel: DashboardViewModel) {
                         ExploreScreen()
                     }
                     composable(Screens.History.route) {
-                        HistoryScreen()
+                        HistoryScreen(viewModel)
                     }
                     composable(Screens.Profile.route) {
                         ProfileScreen(viewModel)
