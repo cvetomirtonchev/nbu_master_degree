@@ -1,5 +1,5 @@
 <resources>
-    <string name="server_client_id">412579573762-57oocq0jh761f03516nemsb8a294k9j9.apps.googleusercontent.com</string>
+    <string name="server_client_id" translatable="false">412579573762-57oocq0jh761f03516nemsb8a294k9j9.apps.googleusercontent.com</string>
     <string name="app_name">Find it</string>
     <string name="welcome_title">Welcome\nto Find it</string>
     <string name="username">Username</string>
@@ -13,6 +13,5 @@
     <string name="field_empty_error">Field cannot be empty</string>
     <string name="cancel">Cancel</string>
     <string name="profile_settings">Profile settings</string>
-    <string name="accessability">Accessibility</string>
     <string name="login_msg">Place login to unlock full Profile tab</string>
 </resources>

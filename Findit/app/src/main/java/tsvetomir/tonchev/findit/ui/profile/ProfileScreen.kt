@@ -15,7 +15,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +33,7 @@ import tsvetomir.tonchev.findit.ui.theme.WhiteColorTransparent
 fun ProfileScreen(viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     val user: User? = viewModel.userMutableState.value
     user?.let {
-        ProfileCard(it, viewModel)
+        ProfileCard(it)
     } ?: run {
         Column(
             modifier = Modifier
@@ -51,7 +50,6 @@ fun ProfileScreen(viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.c
                 textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.width(12.dp))
-            AccessibilityField(viewModel)
         }
     }
 }
@@ -60,8 +58,7 @@ fun ProfileScreen(viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.c
 @ExperimentalMaterial3Api
 @Composable
 fun ProfileCard(
-    user: User,
-    viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    user: User
 ) {
     Column(
         modifier = Modifier
@@ -79,7 +76,7 @@ fun ProfileCard(
                 .fillMaxHeight(),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            ProfileSettings(user, viewModel)
+            ProfileSettings(user)
         }
     }
 
@@ -87,7 +84,7 @@ fun ProfileCard(
 
 @ExperimentalComposeUiApi
 @Composable
-fun ProfileSettings(user: User, viewModel: DashboardViewModel) {
+fun ProfileSettings(user: User) {
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -107,30 +104,6 @@ fun ProfileSettings(user: User, viewModel: DashboardViewModel) {
         Spacer(modifier = Modifier.padding(top = 16.dp))
         InputValueField(stringResource(id = R.string.username), username)
         Spacer(modifier = Modifier.padding(top = 16.dp))
-        AccessibilityField(viewModel)
-    }
-}
-
-@Composable
-fun AccessibilityField(viewModel: DashboardViewModel) {
-    val isDisabilityEnabled = viewModel.isDisabilityEnabledState
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_accessible),
-            contentDescription = null,
-            tint = Color.Black
-        )
-        Spacer(modifier = Modifier.width(2.dp))
-        Text(
-            text = stringResource(R.string.accessability) + ":",
-            style = MaterialTheme.typography.labelMedium,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.width(2.dp))
-        Switch(checked = isDisabilityEnabled.value, onCheckedChange = {
-            viewModel.setDisabilityState(it)
-
-        }, colors = SwitchDefaults.colors(checkedThumbColor = Color.White))
     }
 }
 

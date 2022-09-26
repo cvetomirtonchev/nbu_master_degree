@@ -7,25 +7,6 @@ import javax.inject.Inject
 
 class PlacesMapper @Inject constructor() {
 
-    fun mapPlacesFromLocalApi(
-        placesResponse: List<PlacesResponse>,
-        placeType: String
-    ): List<PlaceUiModel> =
-        placesResponse.map {
-            PlaceUiModel(
-                id = it.placeId,
-                lat = it.lat,
-                lng = it.lng,
-                name = it.name,
-                photos = emptyList(),
-                rating = it.rating,
-                address = it.address,
-                forDisability = true,
-                cityName = it.city,
-                placeType = placeType
-            )
-        }
-
     fun mapNearbyPlacesResponse(
         nearbyPlacesResponse: NearbyPlacesResponse,
         cityName: String,
@@ -45,4 +26,17 @@ class PlacesMapper @Inject constructor() {
                 placeType = placeType
             )
         } ?: emptyList()
+
+    fun mapAccessiblePlaces(
+        placesGoogleApi: List<PlaceUiModel>,
+        placesLocalApi: List<PlacesResponse>
+    ): List<PlaceUiModel> =
+        placesGoogleApi.map { place ->
+            val placeResponse: PlacesResponse? =
+                placesLocalApi.find { localPlace -> localPlace.placeId == place.id }
+            if (placeResponse != null) {
+                place.forDisability = true
+            }
+            place
+        }
 }

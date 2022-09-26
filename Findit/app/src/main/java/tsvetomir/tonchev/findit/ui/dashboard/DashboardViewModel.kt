@@ -26,23 +26,7 @@ class DashboardViewModel @Inject constructor(
     val logoutButtonState: SharedFlow<Unit> = _logoutButtonState
 
     val userMutableState = mutableStateOf(sessionStorage.user)
-    val isDisabilityEnabledState = mutableStateOf(false)
     val searchHistoryMutableState = mutableStateOf<List<HistoryUiModel>>(emptyList())
-
-    fun isDisabilityEnabled() {
-        viewModelScope.launch {
-            isDisabilityEnabledState.value = localDataStore.isDisabilityEnabled()
-        }
-    }
-
-    fun setDisabilityState(isEnabled: Boolean) {
-        showLoading()
-        viewModelScope.launch {
-            localDataStore.setDisability(isEnabled)
-        }
-        isDisabilityEnabledState.value = isEnabled
-        hideLoading()
-    }
 
     fun getSearchHistory() {
         viewModelScope.launch(dispatcher.io) {
@@ -57,7 +41,6 @@ class DashboardViewModel @Inject constructor(
             placesRepository.clearSearchHistory()
             sessionStorage.user = null
             localDataStore.removeSessionToken()
-            localDataStore.setDisability(false)
             _logoutButtonState.emit(Unit)
         }
     }

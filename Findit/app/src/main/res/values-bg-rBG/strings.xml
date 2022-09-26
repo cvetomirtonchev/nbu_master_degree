@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Намери го</string>
+    <string name="welcome_title">Добре дошли\nв Намери го</string>
+    <string name="username">Потребителското име</string>
+    <string name="password">Парола</string>
+    <string name="login_btn">Вход</string>
+    <string name="skip_login_btn">Влез без акаунт</string>
+    <string name="welcome_sub_title">Ние сме тук за да открием това което търсиш</string>
+    <string name="register">Регистрация</string>
+    <string name="empty_username_error">Потребителското име не може да е празно</string>
+    <string name="empty_password_error">Паролата не може да е празна</string>
+    <string name="field_empty_error">Полето не може да е празно</string>
+    <string name="cancel">Отказ</string>
+    <string name="profile_settings">Натройки на профила</string>
+    <string name="login_msg">Моля влезте в акаунта си, за да видите пълната информация</string>
+</resources>

@@ -54,31 +54,23 @@ class PlacesRepository @Inject constructor(
     ): List<PlaceUiModel> {
         saveLastSearch(searchType, cityName)
         trackSearch(searchType, cityName)
-        val isDisabilityEnabled = dataStore.isDisabilityEnabled()
 
         if (lastSearchModel != null && isLastSearchMatched(
                 searchType,
-                location,
-                isDisabilityEnabled
+                location
             )
         ) {
             lastSearchModel?.let {
                 return it.result
             }
         }
-        val places: List<PlaceUiModel> = if (isDisabilityEnabled) {
-            placesMapper.mapPlacesFromLocalApi(
-                placesService.findNearbyPlaces(
-                    cityName,
-                    searchType
-                ),
-                searchType
-            )
-        } else {
-            findAllPlacesFromGoogle(searchType, location, cityName)
-        }
+
+        val placesGoogleApi = findAllPlacesFromGoogle(searchType, location, cityName)
+        val placesLocalApi = placesService.findNearbyPlaces(cityName, searchType)
+        val places = placesMapper.mapAccessiblePlaces(placesGoogleApi, placesLocalApi)
+
         lastSearchModel =
-            LastSearchModelCache(isDisabilityEnabled, searchType, location, places)
+            LastSearchModelCache(searchType, location, places)
         return places
     }
 
@@ -121,12 +113,10 @@ class PlacesRepository @Inject constructor(
     private fun isLastSearchMatched(
         searchType: String,
         location: Location,
-        isDisabilityEnabled: Boolean
     ): Boolean =
         searchType == lastSearchModel?.searchType
                 && location.latitude == lastSearchModel?.location?.latitude
                 && location.longitude == lastSearchModel?.location?.longitude
-                && isDisabilityEnabled == lastSearchModel?.isAccessibleEnabled
 
 
     companion object {
