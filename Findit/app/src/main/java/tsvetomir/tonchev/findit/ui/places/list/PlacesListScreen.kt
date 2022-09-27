@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tsvetomir.tonchev.findit.R
@@ -23,7 +24,7 @@ import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.places.PlacesViewModel
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.YellowColor
-import tsvetomir.tonchev.findit.utils.datastore.openDirectionsInMaps
+import tsvetomir.tonchev.findit.utils.openDirectionsInMaps
 
 @ExperimentalMaterial3Api
 @Composable
@@ -74,7 +75,7 @@ fun PlaceItemView(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     modifier = Modifier.padding(top = 6.dp),
-                    text = "Accessibility:",
+                    text = stringResource(R.string.accessibility),
                     style = MaterialTheme.typography.labelMedium,
                     color = Color.White
                 )
@@ -118,7 +119,7 @@ fun PlaceButtons(
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             Text(
-                text = "Get directions",
+                text = stringResource(R.string.get_directions),
                 color = Color.White,
                 style = MaterialTheme.typography.bodySmall
             )
@@ -137,7 +138,7 @@ fun PlaceButtons(
                 )
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
-                    text = "Mark as accessible",
+                    text = stringResource(R.string.mark_as_accessible),
                     color = Color.White,
                     style = MaterialTheme.typography.bodySmall
                 )

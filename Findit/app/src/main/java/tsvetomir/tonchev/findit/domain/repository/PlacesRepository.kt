@@ -17,7 +17,6 @@ import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.explore.ExploreModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceType
-import tsvetomir.tonchev.findit.utils.datastore.LocalDataStore
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +25,6 @@ class PlacesRepository @Inject constructor(
     private val placesGoogleService: PlacesGoogleService,
     private val placesMapper: PlacesMapper,
     private val database: AppDatabase,
-    private val dataStore: LocalDataStore,
     private val placesService: PlacesService,
     private val trackingService: TrackingService
 ) {
@@ -135,21 +133,21 @@ class PlacesRepository @Inject constructor(
 
         private fun generateFoodAndDrinkTab(): ExploreModel =
             ExploreModel(
-                title = "Food and Drink",
+                titleResId = R.string.food_and_drink,
                 image = R.drawable.photo_food,
                 placeModels = listOf(
                     PlaceModel(
-                        title = "Cafes",
+                        titleResId = R.string.cafes,
                         icon = R.drawable.ic_coffee,
                         placeType = PlaceType.CAFES
                     ),
                     PlaceModel(
-                        title = "Bars",
+                        titleResId = R.string.bars,
                         icon = R.drawable.ic_local_bar,
                         placeType = PlaceType.BAR
                     ),
                     PlaceModel(
-                        title = "Restaurants",
+                        titleResId = R.string.restaurants,
                         icon = R.drawable.ic_restaurant,
                         placeType = PlaceType.RESTAURANT
                     )
@@ -158,16 +156,16 @@ class PlacesRepository @Inject constructor(
 
         private fun generateMoneyTab(): ExploreModel =
             ExploreModel(
-                title = "Money",
+                titleResId = R.string.money,
                 image = R.drawable.cash_card,
                 placeModels = listOf(
                     PlaceModel(
-                        title = "ATMs",
+                        titleResId = R.string.atm,
                         icon = R.drawable.ic_atm,
                         placeType = PlaceType.ATM
                     ),
                     PlaceModel(
-                        title = "Banks",
+                        titleResId = R.string.bank,
                         icon = R.drawable.ic_bank,
                         placeType = PlaceType.BANK
                     )
@@ -176,16 +174,16 @@ class PlacesRepository @Inject constructor(
 
         private fun generateShoppingTab(): ExploreModel =
             ExploreModel(
-                title = "Shopping",
+                titleResId = R.string.shopping,
                 image = R.drawable.shopping,
                 placeModels = listOf(
                     PlaceModel(
-                        title = "Shopping Malls",
+                        titleResId = R.string.shopping_malls,
                         icon = R.drawable.ic_mall,
                         placeType = PlaceType.SHOPPING_MALL
                     ),
                     PlaceModel(
-                        title = "Grocery Stores",
+                        titleResId = R.string.grocery_stores,
                         icon = R.drawable.ic_store,
                         placeType = PlaceType.GROCERY_STORE
                     )
@@ -194,11 +192,11 @@ class PlacesRepository @Inject constructor(
 
         private fun generateHotelTab(): ExploreModel =
             ExploreModel(
-                title = "Stay",
+                titleResId = R.string.stay,
                 image = R.drawable.hotel,
                 placeModels = listOf(
                     PlaceModel(
-                        title = "Hotels",
+                        titleResId = R.string.hotels,
                         icon = R.drawable.ic_hotel,
                         placeType = PlaceType.HOTEL
                     )

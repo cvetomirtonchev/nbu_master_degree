@@ -10,7 +10,7 @@ import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
 import tsvetomir.tonchev.findit.ui.base.BaseViewModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.utils.CoroutineDispatchersProvider
-import tsvetomir.tonchev.findit.utils.datastore.fromPlaceTypeToString
+import tsvetomir.tonchev.findit.utils.fromPlaceTypeToString
 import javax.inject.Inject
 
 @HiltViewModel

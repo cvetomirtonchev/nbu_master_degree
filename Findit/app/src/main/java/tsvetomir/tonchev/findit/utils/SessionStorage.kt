@@ -1,4 +1,4 @@
-package tsvetomir.tonchev.findit.utils.datastore
+package tsvetomir.tonchev.findit.utils
 
 import tsvetomir.tonchev.findit.data.network.model.response.User
 import javax.inject.Inject

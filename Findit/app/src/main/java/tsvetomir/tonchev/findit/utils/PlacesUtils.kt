@@ -1,4 +1,4 @@
-package tsvetomir.tonchev.findit.utils.datastore
+package tsvetomir.tonchev.findit.utils
 
 import android.content.Context
 import android.content.Intent

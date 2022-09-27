@@ -4,8 +4,8 @@ import tsvetomir.tonchev.findit.data.network.model.request.LoginRequest
 import tsvetomir.tonchev.findit.data.network.model.request.SignupRequest
 import tsvetomir.tonchev.findit.data.network.model.response.User
 import tsvetomir.tonchev.findit.data.network.service.UserService
+import tsvetomir.tonchev.findit.utils.SessionStorage
 import tsvetomir.tonchev.findit.utils.datastore.LocalDataStore
-import tsvetomir.tonchev.findit.utils.datastore.SessionStorage
 import javax.inject.Inject
 import javax.inject.Singleton
 

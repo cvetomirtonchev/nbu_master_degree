@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -27,6 +28,8 @@ import tsvetomir.tonchev.findit.ui.places.PlacesActivity
 import tsvetomir.tonchev.findit.ui.theme.ColorBlackOverlay
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.WhiteColorTransparent
+import tsvetomir.tonchev.findit.utils.shouldAskForLocationPermisions
+import tsvetomir.tonchev.findit.utils.showLocationDialog
 
 @ExperimentalMaterial3Api
 @Composable
@@ -86,7 +89,7 @@ fun ExploreCardContent(exploreModel: ExploreModel) {
     ) {
         val (text, row) = createRefs()
         Text(
-            text = exploreModel.title,
+            text = stringResource(id = exploreModel.titleResId),
             color = Color.White,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier
@@ -121,7 +124,11 @@ fun PlaceModel(placeModel: PlaceModel) {
         modifier = Modifier
             .padding(6.dp, 0.dp)
             .clickable {
-                PlacesActivity.start(context, placeModel)
+                if (shouldAskForLocationPermisions(context).not()) {
+                    PlacesActivity.start(context, placeModel)
+                } else {
+                    showLocationDialog(context)
+                }
             }
     ) {
         Box(
@@ -135,7 +142,7 @@ fun PlaceModel(placeModel: PlaceModel) {
             )
         }
         Text(
-            text = placeModel.title,
+            text = stringResource(id = placeModel.titleResId),
             style = MaterialTheme.typography.bodySmall,
             color = Color.White
         )

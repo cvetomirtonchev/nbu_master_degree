@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,7 +20,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.places.PlacesViewModel
-import tsvetomir.tonchev.findit.utils.datastore.openDirectionsInMaps
+import tsvetomir.tonchev.findit.utils.openDirectionsInMaps
 
 @ExperimentalMaterial3Api
 @Composable
@@ -46,7 +47,7 @@ fun MapScreen(location: Location, placesViewModel: PlacesViewModel = viewModel()
                 Marker(
                     state = MarkerState(position = LatLng(placeUiModel.lat, placeUiModel.lng)),
                     title = placeUiModel.name,
-                    snippet = "Long click to get directions",
+                    snippet = stringResource(R.string.long_click_map_label),
                     onInfoWindowLongClick = {
                         openDirectionsInMaps(context, placeUiModel.lat, placeUiModel.lng)
                     },
@@ -54,9 +55,15 @@ fun MapScreen(location: Location, placesViewModel: PlacesViewModel = viewModel()
                         it.showInfoWindow()
                         true
                     },
-                    icon = BitmapDescriptorFactory.defaultMarker(
-                        BitmapDescriptorFactory.HUE_RED
-                    )
+                    icon = if (placeUiModel.forDisability) {
+                        BitmapDescriptorFactory.defaultMarker(
+                            BitmapDescriptorFactory.HUE_AZURE
+                        )
+                    } else {
+                        BitmapDescriptorFactory.defaultMarker(
+                            BitmapDescriptorFactory.HUE_RED
+                        )
+                    }
                 )
             }
         }

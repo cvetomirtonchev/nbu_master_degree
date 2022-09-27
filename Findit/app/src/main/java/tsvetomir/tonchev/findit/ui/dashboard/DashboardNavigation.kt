@@ -17,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -27,14 +28,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import kotlinx.coroutines.launch
+import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.components.appcomponents.AppBar
 import tsvetomir.tonchev.findit.ui.components.appcomponents.DrawerContent
 import tsvetomir.tonchev.findit.ui.explore.ExploreScreen
 import tsvetomir.tonchev.findit.ui.history.HistoryScreen
 import tsvetomir.tonchev.findit.ui.profile.ProfileScreen
-import tsvetomir.tonchev.findit.ui.screen.Screens
 
-val tabItems = listOf("Explore", "History", "Profile")
+private const val TAB_EXPLORE = 0
+private const val TAB_HISTORY = 1
+private const val TAB_PROFILE = 2
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterial3Api
@@ -46,6 +49,12 @@ fun NavigationPage(viewModel: DashboardViewModel) {
     val navController = rememberNavController()
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val routeName = navBackStackEntry.value?.destination?.route ?: ""
+    val tabItems =
+        listOf(
+            stringResource(R.string.explore),
+            stringResource(R.string.history),
+            stringResource(R.string.profile)
+        )
 
     ModalNavigationDrawer(
         drawerContent = { DrawerContent(navController, drawerState, viewModel) },
@@ -65,19 +74,19 @@ fun NavigationPage(viewModel: DashboardViewModel) {
             }
         }, bottomBar = {
             NavigationBar {
-                BottomNavigation(navController)
+                BottomNavigation(navController, tabItems)
             }
 
         }) {
             Box(modifier = Modifier.padding(it)) {
-                NavHost(navController = navController, startDestination = Screens.Explore.route) {
-                    composable(Screens.Explore.route) {
+                NavHost(navController = navController, startDestination = tabItems[TAB_EXPLORE]) {
+                    composable(tabItems[TAB_EXPLORE]) {
                         ExploreScreen()
                     }
-                    composable(Screens.History.route) {
+                    composable(tabItems[TAB_HISTORY]) {
                         HistoryScreen(viewModel)
                     }
-                    composable(Screens.Profile.route) {
+                    composable(tabItems[TAB_PROFILE]) {
                         ProfileScreen(viewModel)
                     }
                 }
@@ -88,7 +97,7 @@ fun NavigationPage(viewModel: DashboardViewModel) {
 
 
 @Composable
-fun BottomNavigation(navController: NavHostController) {
+fun BottomNavigation(navController: NavHostController, tabItems: List<String>) {
     val selectedItem = remember { mutableStateOf(0) }
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val parentRouteName = navBackStackEntry.value?.destination?.route
@@ -118,17 +127,17 @@ fun BottomNavigation(navController: NavHostController) {
                     },
                     icon = {
                         when (item) {
-                            "Explore" -> Icon(
+                            stringResource(R.string.explore) -> Icon(
                                 imageVector = Icons.Default.Home,
                                 contentDescription = null,
                                 tint = setSelectedColor(selectedItem.value, index)
                             )
-                            "History" -> Icon(
+                            stringResource(R.string.history) -> Icon(
                                 imageVector = Icons.Default.Menu,
                                 contentDescription = null,
                                 tint = setSelectedColor(selectedItem.value, index)
                             )
-                            "Profile" -> Icon(
+                            stringResource(R.string.profile) -> Icon(
                                 imageVector = Icons.Default.Person,
                                 contentDescription = null,
                                 tint = setSelectedColor(selectedItem.value, index)

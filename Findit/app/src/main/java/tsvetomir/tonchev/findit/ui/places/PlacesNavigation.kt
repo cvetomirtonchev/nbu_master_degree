@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,22 +23,24 @@ import androidx.navigation.navOptions
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.ui.places.list.PlacesList
 import tsvetomir.tonchev.findit.ui.places.map.MapScreen
-import tsvetomir.tonchev.findit.ui.screen.Screens
 
+private const val TAB_MAP = 0
+private const val TAB_LIST = 1
 
 @ExperimentalMaterial3Api
 @Composable
 fun PlacesNavigation(viewModel: PlacesViewModel, location: Location) {
     val navController = rememberNavController()
+    val tabItems = listOf(stringResource(R.string.places_map), stringResource(R.string.places_list))
     Scaffold(topBar = {
-        TopNavigation(navController)
+        TopNavigation(navController, tabItems)
     }) {
         Box(modifier = Modifier.padding(it)) {
-            NavHost(navController = navController, startDestination = Screens.PlacesMap.route) {
-                composable(Screens.PlacesMap.route) {
+            NavHost(navController = navController, startDestination = tabItems[TAB_MAP]) {
+                composable(tabItems[TAB_MAP]) {
                     MapScreen(location, viewModel)
                 }
-                composable(Screens.PlacesList.route) {
+                composable(tabItems[TAB_LIST]) {
                     PlacesList(viewModel)
                 }
             }
@@ -46,8 +49,7 @@ fun PlacesNavigation(viewModel: PlacesViewModel, location: Location) {
 }
 
 @Composable
-fun TopNavigation(navController: NavHostController) {
-    val tabItems = listOf("Places Map", "Places List")
+fun TopNavigation(navController: NavHostController, tabItems: List<String>) {
     val selectedItem = remember { mutableStateOf(0) }
 
     NavigationBar(
@@ -71,12 +73,12 @@ fun TopNavigation(navController: NavHostController) {
                 },
                 icon = {
                     when (item) {
-                        "Places Map" -> Icon(
+                        stringResource(R.string.places_map) -> Icon(
                             painter = painterResource(id = R.drawable.ic_public),
                             contentDescription = null,
                             tint = setSelectedColor(selectedItem.value, index)
                         )
-                        "Places List" -> Icon(
+                        stringResource(R.string.places_list) -> Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
                             tint = setSelectedColor(selectedItem.value, index)

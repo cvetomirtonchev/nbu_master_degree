@@ -47,7 +47,7 @@ class PlacesActivity : BaseActivity() {
     }
 
     private fun getCityName(location: Location): String {
-        val geocoder = Geocoder(this, Locale.getDefault())
+        val geocoder = Geocoder(this, Locale.US)
         val addresses: List<Address> =
             geocoder.getFromLocation(location.latitude, location.longitude, 1)
         return addresses[0].locality

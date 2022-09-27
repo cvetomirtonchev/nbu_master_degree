@@ -14,8 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import tsvetomir.tonchev.findit.ui.dashboard.DashboardViewModel
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
-import tsvetomir.tonchev.findit.utils.datastore.fromPlaceTypeToIconRes
-import tsvetomir.tonchev.findit.utils.datastore.fromPlaceTypeToString
+import tsvetomir.tonchev.findit.utils.fromPlaceTypeToIconRes
+import tsvetomir.tonchev.findit.utils.fromPlaceTypeToString
 
 @ExperimentalMaterial3Api
 @Composable

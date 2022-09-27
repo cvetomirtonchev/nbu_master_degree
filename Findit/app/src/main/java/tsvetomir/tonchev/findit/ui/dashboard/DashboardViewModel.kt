@@ -10,9 +10,9 @@ import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
 import tsvetomir.tonchev.findit.ui.base.BaseViewModel
 import tsvetomir.tonchev.findit.ui.history.HistoryUiModel
 import tsvetomir.tonchev.findit.utils.CoroutineDispatchersProvider
+import tsvetomir.tonchev.findit.utils.SessionStorage
 import tsvetomir.tonchev.findit.utils.datastore.LocalDataStore
-import tsvetomir.tonchev.findit.utils.datastore.SessionStorage
-import tsvetomir.tonchev.findit.utils.datastore.fromStringToPlaceType
+import tsvetomir.tonchev.findit.utils.fromStringToPlaceType
 import javax.inject.Inject
 
 @HiltViewModel
