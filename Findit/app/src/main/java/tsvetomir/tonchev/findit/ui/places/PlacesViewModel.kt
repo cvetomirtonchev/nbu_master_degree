@@ -10,6 +10,7 @@ import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
 import tsvetomir.tonchev.findit.ui.base.BaseViewModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.utils.CoroutineDispatchersProvider
+import tsvetomir.tonchev.findit.utils.SessionStorage
 import tsvetomir.tonchev.findit.utils.fromPlaceTypeToString
 import javax.inject.Inject
 
@@ -17,9 +18,11 @@ import javax.inject.Inject
 class PlacesViewModel @Inject constructor(
     private val placesRepository: PlacesRepository,
     private val provideDispatchersProvider: CoroutineDispatchersProvider,
+    sessionStorage: SessionStorage
 ) : BaseViewModel() {
 
     val placesUiModelList = mutableStateOf<List<PlaceUiModel>>(emptyList())
+    val userMutableState = mutableStateOf(sessionStorage.user)
 
     fun loadPlacesNearYou(placeModel: PlaceModel?, location: Location, cityName: String) {
         if (placeModel == null) {
@@ -41,7 +44,7 @@ class PlacesViewModel @Inject constructor(
     }
 
     fun markAsAccessible(placeUiModel: PlaceUiModel) {
-        placeUiModel.forDisability = true
+        placeUiModel.isAccessible = true
         placesUiModelList.value = placesUiModelList.value.map {
             if (placeUiModel.id == it.id) {
                 placeUiModel

@@ -55,7 +55,7 @@ fun MapScreen(location: Location, placesViewModel: PlacesViewModel = viewModel()
                         it.showInfoWindow()
                         true
                     },
-                    icon = if (placeUiModel.forDisability) {
+                    icon = if (placeUiModel.isAccessible) {
                         BitmapDescriptorFactory.defaultMarker(
                             BitmapDescriptorFactory.HUE_AZURE
                         )

@@ -12,6 +12,7 @@ import tsvetomir.tonchev.findit.data.network.service.PlacesGoogleService
 import tsvetomir.tonchev.findit.data.network.service.PlacesService
 import tsvetomir.tonchev.findit.data.network.service.TrackingService
 import tsvetomir.tonchev.findit.domain.mapper.PlacesMapper
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 import tsvetomir.tonchev.findit.domain.model.LastSearchModelCache
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.explore.ExploreModel
@@ -41,7 +42,13 @@ class PlacesRepository @Inject constructor(
                 rating = placeUiModel.rating,
                 address = placeUiModel.address,
                 city = placeUiModel.cityName,
-                placeType = placeUiModel.placeType
+                placeType = placeUiModel.placeType,
+                accessibleFeatures = listOf(
+                    AccessibleFeatures.ENTRANCE,
+                    AccessibleFeatures.RESTROOM,
+                    AccessibleFeatures.PARKING,
+                    AccessibleFeatures.SEATING
+                )
             )
         )
 

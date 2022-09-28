@@ -2,6 +2,7 @@ package tsvetomir.tonchev.findit.data.network.model.request
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 
 @JsonClass(generateAdapter = true)
 class AddPlaceRequest(
@@ -20,5 +21,7 @@ class AddPlaceRequest(
     @Json(name = "city")
     val city: String,
     @Json(name = "placeType")
-    val placeType: String
+    val placeType: String,
+    @Json(name = "accessibleFeatures")
+    val accessibleFeatures: List<AccessibleFeatures>
 )

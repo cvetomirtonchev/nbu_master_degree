@@ -14,11 +14,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowMainAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.flowlayout.SizeMode
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.places.PlacesViewModel
@@ -48,7 +53,7 @@ fun PlaceItemView(
     viewModel: PlacesViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     val isAccessible = remember {
-        mutableStateOf(placeUiModel.forDisability)
+        mutableStateOf(placeUiModel.isAccessible)
     }
     Card(
         shape = RoundedCornerShape(16.dp),
@@ -72,7 +77,10 @@ fun PlaceItemView(
                 color = Color.Gray
             )
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start
+            ) {
                 Text(
                     modifier = Modifier.padding(top = 6.dp),
                     text = stringResource(R.string.accessibility),
@@ -90,9 +98,41 @@ fun PlaceItemView(
                         .height(24.dp)
                 )
             }
+            if (isAccessible.value) {
+                Spacer(modifier = Modifier.size(6.dp))
+                AccessibleFeatures(placeUiModel.accessibleFeaturesResIds)
+            }
             Spacer(modifier = Modifier.size(6.dp))
             PlaceButtons(placeUiModel, viewModel) {
                 isAccessible.value = true
+            }
+        }
+    }
+}
+
+@Composable
+fun AccessibleFeatures(accessibleFeatures: List<Int>) {
+    val itemSize: Dp = (LocalConfiguration.current.screenWidthDp.dp / 3)
+    FlowRow(
+        mainAxisSize = SizeMode.Expand,
+        mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween
+    ) {
+        repeat(accessibleFeatures.size) { index ->
+            val accessibleFeature = accessibleFeatures[index]
+            Column(horizontalAlignment = Alignment.Start, modifier = Modifier.width(itemSize)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        text = stringResource(id = accessibleFeature),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.White
+                    )
+                }
             }
         }
     }
@@ -105,8 +145,10 @@ fun PlaceButtons(
     onAccessibleClicked: () -> Unit
 ) {
     val isAccessible = remember {
-        mutableStateOf(placeUiModel.forDisability)
+        mutableStateOf(placeUiModel.isAccessible)
     }
+
+    val user = viewModel.userMutableState
     val context = LocalContext.current
     Row {
         Button(onClick = {
@@ -124,7 +166,7 @@ fun PlaceButtons(
                 style = MaterialTheme.typography.bodySmall
             )
         }
-        if (isAccessible.value.not()) {
+        if (isAccessible.value.not() && user.value != null) {
             Spacer(modifier = Modifier.size(6.dp))
             Button(onClick = {
                 onAccessibleClicked()
@@ -179,7 +221,7 @@ fun RatingBarView(rating: Double) {
 }
 
 @ExperimentalMaterial3Api
-@Preview(showBackground = true)
+@Preview(showBackground = true, backgroundColor = 12)
 @Composable
 fun PlaceItemPreview() {
     FindItTheme {

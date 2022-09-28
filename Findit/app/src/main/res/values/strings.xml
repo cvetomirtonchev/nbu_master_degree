@@ -39,4 +39,8 @@
     <string name="history">History</string>
     <string name="profile">Profile</string>
     <string name="long_click_map_label">Long click to get directions</string>
+    <string name="entrance">Entrance</string>
+    <string name="restroom">Restroom</string>
+    <string name="parking">Parking</string>
+    <string name="seating">Seating</string>
 </resources>

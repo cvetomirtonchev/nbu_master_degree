@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tsvetomir.tonchev.findit.BuildConfig
 import tsvetomir.tonchev.findit.data.network.clieant.HttpClient
+import tsvetomir.tonchev.findit.data.network.converter.AccessibleFeaturesJsonConverter
 import tsvetomir.tonchev.findit.data.network.service.PlacesGoogleService
 import tsvetomir.tonchev.findit.data.network.service.PlacesService
 import tsvetomir.tonchev.findit.data.network.service.TrackingService
@@ -32,6 +33,14 @@ object NetworkModule {
         moshiBuilder.build()
 
     @Provides
+    @Named(MOSHI_PLACES_SERVICE)
+    @Singleton
+    fun provideMoshiPlaceService(moshiBuilder: Moshi.Builder): Moshi =
+        moshiBuilder
+            .add(AccessibleFeaturesJsonConverter())
+            .build()
+
+    @Provides
     @Singleton
     fun provideUserService(
         @Named(MOSHI_DEFAULT) moshi: Moshi,
@@ -46,7 +55,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun providePlacesService(
-        @Named(MOSHI_DEFAULT) moshi: Moshi,
+        @Named(MOSHI_PLACES_SERVICE) moshi: Moshi,
         dataStore: LocalDataStore
     ): PlacesService =
         Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
@@ -81,5 +90,6 @@ object NetworkModule {
 
 
     private const val MOSHI_DEFAULT = "moshiDefault"
+    private const val MOSHI_PLACES_SERVICE = "moshiPlaceService"
     private const val GOOGLE_MAPS_URL = "https://maps.googleapis.com/maps/api/"
 }
