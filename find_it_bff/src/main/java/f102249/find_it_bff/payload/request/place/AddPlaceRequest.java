@@ -24,7 +24,7 @@ public class AddPlaceRequest {
 
     @NotBlank
     private String placeType;
-
+    
     private List<String> accessibleFeatures;
 
     public String getPlaceType() {

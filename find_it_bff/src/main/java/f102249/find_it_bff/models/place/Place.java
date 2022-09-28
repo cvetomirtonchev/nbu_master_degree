@@ -31,6 +31,8 @@ public class Place {
     @NotBlank
     private String placeType;
 
+    @Column
+    @ElementCollection(targetClass = String.class)
     private List<String> accessibleFeatures;
 
     public Place() {
