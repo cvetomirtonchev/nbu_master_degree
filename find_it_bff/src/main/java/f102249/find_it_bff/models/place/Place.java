@@ -2,6 +2,7 @@ package f102249.find_it_bff.models.place;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "place")
@@ -30,10 +31,12 @@ public class Place {
     @NotBlank
     private String placeType;
 
+    private List<String> accessibleFeatures;
+
     public Place() {
     }
 
-    public Place(String placeId, Double lat, Double lng, String name, Double rating, String address, String city, String placeType) {
+    public Place(String placeId, Double lat, Double lng, String name, Double rating, String address, String city, String placeType, List<String> accessibleFeatures) {
         this.placeId = placeId;
         this.lat = lat;
         this.lng = lng;
@@ -42,6 +45,7 @@ public class Place {
         this.address = address;
         this.city = city;
         this.placeType = placeType;
+        this.accessibleFeatures = accessibleFeatures;
     }
 
     public Integer getId() {
@@ -78,5 +82,9 @@ public class Place {
 
     public String getPlaceType() {
         return placeType;
+    }
+
+    public List<String> getAccessibleFeatures() {
+        return accessibleFeatures;
     }
 }

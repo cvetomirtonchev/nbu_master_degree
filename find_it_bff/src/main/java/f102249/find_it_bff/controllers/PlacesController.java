@@ -27,7 +27,14 @@ public class PlacesController {
         List<PlaceResponse> placeList = placeRepository.findAllByCity(city).stream()
                 .filter(place -> place.getPlaceType().equals(placeType))
                 .map(place -> new PlaceResponse(
-                        place.getPlaceId(), place.getLat(), place.getLng(), place.getName(), place.getRating(), place.getAddress(), place.getCity()
+                        place.getPlaceId(),
+                        place.getLat(),
+                        place.getLng(),
+                        place.getName(),
+                        place.getRating(),
+                        place.getAddress(),
+                        place.getCity(),
+                        place.getAccessibleFeatures()
                 )).collect(Collectors.toList());
 
         return ResponseEntity.ok(placeList);
@@ -40,7 +47,15 @@ public class PlacesController {
         if (foundedPlace.isPresent()) {
             return ResponseEntity.badRequest().build();
         }
-        Place place = new Place(placeRequest.getPlaceId(), placeRequest.getLat(), placeRequest.getLng(), placeRequest.getName(), placeRequest.getRating(), placeRequest.getAddress(), placeRequest.getCity(), placeRequest.getPlaceType());
+        Place place = new Place(placeRequest.getPlaceId(),
+                placeRequest.getLat(),
+                placeRequest.getLng(),
+                placeRequest.getName(),
+                placeRequest.getRating(),
+                placeRequest.getAddress(),
+                placeRequest.getCity(),
+                placeRequest.getPlaceType(),
+                placeRequest.getAccessibleFeatures());
 
         placeRepository.save(place);
         return ResponseEntity.ok("Success");

@@ -1,5 +1,7 @@
 package f102249.find_it_bff.payload.response;
 
+import java.util.List;
+
 public class PlaceResponse {
     private String placeId;
 
@@ -15,7 +17,9 @@ public class PlaceResponse {
 
     private String city;
 
-    public PlaceResponse(String placeId, Double lat, Double lng, String name, Double rating, String address, String city) {
+    private List<String> accessibleFeatures;
+
+    public PlaceResponse(String placeId, Double lat, Double lng, String name, Double rating, String address, String city, List<String> accessibleFeatures) {
         this.placeId = placeId;
         this.lat = lat;
         this.lng = lng;
@@ -23,6 +27,15 @@ public class PlaceResponse {
         this.rating = rating;
         this.address = address;
         this.city = city;
+        this.accessibleFeatures = accessibleFeatures;
+    }
+
+    public List<String> getAccessibleFeatures() {
+        return accessibleFeatures;
+    }
+
+    public void setAccessibleFeatures(List<String> accessibleFeatures) {
+        this.accessibleFeatures = accessibleFeatures;
     }
 
     public String getPlaceId() {

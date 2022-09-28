@@ -1,6 +1,7 @@
 package f102249.find_it_bff.payload.request.place;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class AddPlaceRequest {
 
@@ -23,6 +24,8 @@ public class AddPlaceRequest {
 
     @NotBlank
     private String placeType;
+
+    private List<String> accessibleFeatures;
 
     public String getPlaceType() {
         return placeType;
@@ -86,5 +89,13 @@ public class AddPlaceRequest {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public List<String> getAccessibleFeatures() {
+        return accessibleFeatures;
+    }
+
+    public void setAccessibleFeatures(List<String> accessibleFeatures) {
+        this.accessibleFeatures = accessibleFeatures;
     }
 }
