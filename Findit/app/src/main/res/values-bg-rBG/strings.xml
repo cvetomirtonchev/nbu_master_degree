@@ -43,4 +43,7 @@
     <string name="restroom">Тоалетна</string>
     <string name="parking">Паркинг</string>
     <string name="seating">Места за сядане</string>
+    <string name="dismiss">Отхвърляне</string>
+    <string name="add">Добави</string>
+    <string name="chose_accesible_features">Изберете достъпните функции</string>
 </resources>

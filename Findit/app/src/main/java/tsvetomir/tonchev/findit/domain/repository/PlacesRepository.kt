@@ -32,7 +32,10 @@ class PlacesRepository @Inject constructor(
 
     private var lastSearchModel: LastSearchModelCache? = null
 
-    suspend fun addAccessiblePlace(placeUiModel: PlaceUiModel): Response<Void> =
+    suspend fun addAccessiblePlace(
+        placeUiModel: PlaceUiModel,
+        acceptedFeatures: List<AccessibleFeatures>
+    ): Response<Void> =
         placesService.addAccessiblePlace(
             AddPlaceRequest(
                 placeId = placeUiModel.id,
@@ -43,12 +46,7 @@ class PlacesRepository @Inject constructor(
                 address = placeUiModel.address,
                 city = placeUiModel.cityName,
                 placeType = placeUiModel.placeType,
-                accessibleFeatures = listOf(
-                    AccessibleFeatures.ENTRANCE,
-                    AccessibleFeatures.RESTROOM,
-                    AccessibleFeatures.PARKING,
-                    AccessibleFeatures.SEATING
-                )
+                accessibleFeatures = acceptedFeatures
             )
         )
 

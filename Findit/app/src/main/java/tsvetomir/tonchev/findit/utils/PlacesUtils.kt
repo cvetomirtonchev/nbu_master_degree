@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import tsvetomir.tonchev.findit.R
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 import tsvetomir.tonchev.findit.ui.explore.PlaceType
 
 fun fromPlaceTypeToString(placeType: PlaceType): String =
@@ -50,3 +51,12 @@ fun openDirectionsInMaps(context: Context, lat: Double, lng: Double) {
     mapIntent.setPackage("com.google.android.apps.maps")
     context.startActivity(mapIntent)
 }
+
+fun accessibleFeatureToRes(accessibleFeature: AccessibleFeatures): Int =
+    when (accessibleFeature) {
+        AccessibleFeatures.ENTRANCE -> R.string.entrance
+        AccessibleFeatures.SEATING -> R.string.seating
+        AccessibleFeatures.PARKING -> R.string.parking
+        AccessibleFeatures.RESTROOM -> R.string.restroom
+        AccessibleFeatures.UNKNOWN -> 0
+    }

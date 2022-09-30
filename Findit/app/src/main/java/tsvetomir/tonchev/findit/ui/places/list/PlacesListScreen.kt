@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+
 package tsvetomir.tonchev.findit.ui.places.list
 
 import androidx.compose.foundation.layout.*
@@ -25,10 +27,15 @@ import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.flowlayout.SizeMode
 import tsvetomir.tonchev.findit.R
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures.*
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
+import tsvetomir.tonchev.findit.ui.components.ButtonType
+import tsvetomir.tonchev.findit.ui.components.ButtonWithRoundCornerShape
 import tsvetomir.tonchev.findit.ui.places.PlacesViewModel
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.YellowColor
+import tsvetomir.tonchev.findit.utils.accessibleFeatureToRes
 import tsvetomir.tonchev.findit.utils.openDirectionsInMaps
 
 @ExperimentalMaterial3Api
@@ -167,11 +174,18 @@ fun PlaceButtons(
             )
         }
         if (isAccessible.value.not() && user.value != null) {
+            val openDialog = remember { mutableStateOf(false) }
+            AccessibleDialog(openDialog.value) { isAdded, acceptedFeatures ->
+                openDialog.value = false
+                if (isAdded) {
+                    onAccessibleClicked()
+                    isAccessible.value = isAdded
+                    viewModel.markAsAccessible(placeUiModel, acceptedFeatures)
+                }
+            }
             Spacer(modifier = Modifier.size(6.dp))
             Button(onClick = {
-                onAccessibleClicked()
-                isAccessible.value = true
-                viewModel.markAsAccessible(placeUiModel)
+                openDialog.value = true
             }, contentPadding = ButtonDefaults.TextButtonContentPadding) {
                 Icon(
                     Icons.Default.Check,
@@ -187,6 +201,88 @@ fun PlaceButtons(
             }
         }
     }
+}
+
+@Composable
+fun AccessibleDialog(
+    shouldOpenDialog: Boolean,
+    onDismiss: (isAdded: Boolean, features: List<AccessibleFeatures>) -> Unit
+) {
+    val listOfFeatures = listOf(
+        ENTRANCE,
+        RESTROOM,
+        PARKING,
+        SEATING
+    )
+    val acceptedFeatures = mutableListOf<AccessibleFeatures>()
+    acceptedFeatures.add(ENTRANCE)
+
+    if (shouldOpenDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                onDismiss(false, emptyList())
+            },
+            title = {
+                Text(
+                    text = stringResource(R.string.chose_accesible_features),
+                    style = MaterialTheme.typography.labelMedium
+                )
+            },
+            text = {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    items(listOfFeatures) { feature ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            val checkedState = remember {
+                                if (feature == ENTRANCE) {
+                                    mutableStateOf(true)
+                                } else {
+                                    mutableStateOf(false)
+                                }
+                            }
+                            Checkbox(
+                                colors = CheckboxDefaults.colors(checkmarkColor = Color.White),
+                                checked = checkedState.value,
+                                onCheckedChange = { isChecked ->
+                                    checkedState.value = isChecked
+                                    if (isChecked) {
+                                        acceptedFeatures.add(feature)
+                                    } else {
+                                        acceptedFeatures.remove(feature)
+                                    }
+                                },
+                                enabled = feature != ENTRANCE
+                            )
+                            Text(text = stringResource(id = accessibleFeatureToRes(feature)))
+                        }
+                    }
+                }
+            },
+            dismissButton = {
+                Column {
+                    ButtonWithRoundCornerShape(
+                        title = stringResource(R.string.dismiss),
+                        type = ButtonType.PRIMARY
+                    ) {
+                        onDismiss(false, emptyList())
+                    }
+                }
+            },
+            confirmButton = {
+                Column {
+                    ButtonWithRoundCornerShape(
+                        title = stringResource(R.string.add),
+                        type = ButtonType.SECONDARY
+                    ) {
+                        onDismiss(true, acceptedFeatures)
+                    }
+                }
+            }
+        )
+    }
+
 }
 
 @Composable
@@ -225,19 +321,19 @@ fun RatingBarView(rating: Double) {
 @Composable
 fun PlaceItemPreview() {
     FindItTheme {
-        PlaceItemView(
-            PlaceUiModel(
-                "",
-                1.0,
-                1.0,
-                "Happy Bar&Grill",
-                emptyList(),
-                2.9,
-                "Mladost 1, Sofia",
-                false,
-                "Sofia",
-                "type"
-            )
-        )
+//        PlaceItemView(
+//            PlaceUiModel(
+//                "",
+//                1.0,
+//                1.0,
+//                "Happy Bar&Grill",
+//                emptyList(),
+//                2.9,
+//                "Mladost 1, Sofia",
+//                false,
+//                "Sofia",
+//                "type"
+//            )
+//        )
     }
 }

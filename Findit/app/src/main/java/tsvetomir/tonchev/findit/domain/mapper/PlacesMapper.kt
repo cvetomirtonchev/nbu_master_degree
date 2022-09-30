@@ -1,10 +1,9 @@
 package tsvetomir.tonchev.findit.domain.mapper
 
-import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.data.network.model.response.PlacesResponse
 import tsvetomir.tonchev.findit.data.network.model.response.nearbyplaces.NearbyPlacesResponse
-import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
+import tsvetomir.tonchev.findit.utils.accessibleFeatureToRes
 import javax.inject.Inject
 
 class PlacesMapper @Inject constructor() {
@@ -43,15 +42,6 @@ class PlacesMapper @Inject constructor() {
                 }
             }
             place
-        }
-
-    private fun accessibleFeatureToRes(accessibleFeature: AccessibleFeatures): Int =
-        when (accessibleFeature) {
-            AccessibleFeatures.ENTRANCE -> R.string.entrance
-            AccessibleFeatures.SEATING -> R.string.seating
-            AccessibleFeatures.PARKING -> R.string.parking
-            AccessibleFeatures.RESTROOM -> R.string.restroom
-            AccessibleFeatures.UNKNOWN -> 0
         }
 }
 

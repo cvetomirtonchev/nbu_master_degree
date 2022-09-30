@@ -5,12 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.domain.repository.PlacesRepository
 import tsvetomir.tonchev.findit.ui.base.BaseViewModel
 import tsvetomir.tonchev.findit.ui.explore.PlaceModel
 import tsvetomir.tonchev.findit.utils.CoroutineDispatchersProvider
 import tsvetomir.tonchev.findit.utils.SessionStorage
+import tsvetomir.tonchev.findit.utils.accessibleFeatureToRes
 import tsvetomir.tonchev.findit.utils.fromPlaceTypeToString
 import javax.inject.Inject
 
@@ -43,8 +45,11 @@ class PlacesViewModel @Inject constructor(
         }
     }
 
-    fun markAsAccessible(placeUiModel: PlaceUiModel) {
+    fun markAsAccessible(placeUiModel: PlaceUiModel, acceptedFeatures: List<AccessibleFeatures>) {
         placeUiModel.isAccessible = true
+        placeUiModel.accessibleFeaturesResIds = acceptedFeatures.map {
+            accessibleFeatureToRes(it)
+        }
         placesUiModelList.value = placesUiModelList.value.map {
             if (placeUiModel.id == it.id) {
                 placeUiModel
@@ -52,7 +57,7 @@ class PlacesViewModel @Inject constructor(
         }
         showLoading()
         viewModelScope.launch(provideDispatchersProvider.io) {
-            runCatching { placesRepository.addAccessiblePlace(placeUiModel) }
+            runCatching { placesRepository.addAccessiblePlace(placeUiModel, acceptedFeatures) }
                 .onSuccess { hideLoading() }
                 .onFailure { hideLoading() }
         }
