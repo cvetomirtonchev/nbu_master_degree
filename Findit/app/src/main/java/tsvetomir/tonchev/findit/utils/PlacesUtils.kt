@@ -3,6 +3,9 @@ package tsvetomir.tonchev.findit.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.ui.graphics.vector.ImageVector
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 import tsvetomir.tonchev.findit.ui.explore.PlaceType
@@ -59,4 +62,13 @@ fun accessibleFeatureToRes(accessibleFeature: AccessibleFeatures): Int =
         AccessibleFeatures.PARKING -> R.string.parking
         AccessibleFeatures.RESTROOM -> R.string.restroom
         AccessibleFeatures.UNKNOWN -> 0
+    }
+
+fun accessibleFeatureToImageVector(accessibleFeature: AccessibleFeatures): ImageVector =
+    when (accessibleFeature) {
+        AccessibleFeatures.ENTRANCE -> Icons.Default.DoorFront
+        AccessibleFeatures.SEATING -> Icons.Default.Chair
+        AccessibleFeatures.PARKING -> Icons.Default.LocalParking
+        AccessibleFeatures.RESTROOM -> Icons.Default.Wc
+        AccessibleFeatures.UNKNOWN -> Icons.Default.Home
     }

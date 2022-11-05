@@ -1,5 +1,7 @@
 package tsvetomir.tonchev.findit.domain.model
 
+import androidx.annotation.StringRes
+import androidx.compose.ui.graphics.vector.ImageVector
 import tsvetomir.tonchev.findit.data.network.model.response.nearbyplaces.Photo
 
 data class PlaceUiModel(
@@ -13,5 +15,11 @@ data class PlaceUiModel(
     var isAccessible: Boolean,
     val cityName: String,
     val placeType: String,
-    var accessibleFeaturesResIds: List<Int> = emptyList()
+    var accessibleFeaturesUiModelList: List<AccessibleFeaturesUiModel> = emptyList()
+)
+
+data class AccessibleFeaturesUiModel(
+    @StringRes
+    val accessibleFeaturesResIds: Int,
+    val accessibleFeatureImageVector: ImageVector
 )

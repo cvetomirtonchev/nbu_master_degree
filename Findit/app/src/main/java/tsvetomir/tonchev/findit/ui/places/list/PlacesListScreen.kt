@@ -29,6 +29,7 @@ import com.google.accompanist.flowlayout.SizeMode
 import tsvetomir.tonchev.findit.R
 import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures
 import tsvetomir.tonchev.findit.domain.model.AccessibleFeatures.*
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeaturesUiModel
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
 import tsvetomir.tonchev.findit.ui.components.ButtonType
 import tsvetomir.tonchev.findit.ui.components.ButtonWithRoundCornerShape
@@ -107,7 +108,7 @@ fun PlaceItemView(
             }
             if (isAccessible.value) {
                 Spacer(modifier = Modifier.size(6.dp))
-                AccessibleFeatures(placeUiModel.accessibleFeaturesResIds)
+                AccessibleFeatures(placeUiModel.accessibleFeaturesUiModelList)
             }
             Spacer(modifier = Modifier.size(6.dp))
             PlaceButtons(placeUiModel, viewModel) {
@@ -118,7 +119,7 @@ fun PlaceItemView(
 }
 
 @Composable
-fun AccessibleFeatures(accessibleFeatures: List<Int>) {
+fun AccessibleFeatures(accessibleFeatures: List<AccessibleFeaturesUiModel>) {
     val itemSize: Dp = (LocalConfiguration.current.screenWidthDp.dp / 3)
     FlowRow(
         mainAxisSize = SizeMode.Expand,
@@ -129,13 +130,13 @@ fun AccessibleFeatures(accessibleFeatures: List<Int>) {
             Column(horizontalAlignment = Alignment.Start, modifier = Modifier.width(itemSize)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Check,
+                        imageVector = accessibleFeature.accessibleFeatureImageVector,
                         contentDescription = null,
                         tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(2.dp))
                     Text(
-                        text = stringResource(id = accessibleFeature),
+                        text = stringResource(id = accessibleFeature.accessibleFeaturesResIds),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.White
                     )

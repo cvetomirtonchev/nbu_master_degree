@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(
 
     private val _loginButtonState = MutableSharedFlow<Unit>()
     val loginButtonState: SharedFlow<Unit> = _loginButtonState
-    
+
     var username = mutableStateOf(InputDataModel(text = ""))
     var password = mutableStateOf(InputDataModel(text = ""))
 
@@ -49,6 +49,11 @@ class LoginViewModel @Inject constructor(
                 hideLoading()
                 _loginButtonState.emit(Unit)
             }.onFailure {
+                password.value =
+                    InputDataModel(
+                        text = password.value.text,
+                        resources.getString(R.string.wrong_credentials)
+                    )
                 hideLoading()
             }
         }

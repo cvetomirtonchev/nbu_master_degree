@@ -10,6 +10,7 @@
     <string name="register">Регистрация</string>
     <string name="empty_username_error">Потребителското име не може да е празно</string>
     <string name="empty_password_error">Паролата не може да е празна</string>
+    <string name="wrong_credentials">Грешни идентификационни данни</string>
     <string name="field_empty_error">Полето не може да е празно</string>
     <string name="cancel">Отказ</string>
     <string name="profile_settings">Натройки на профила</string>
@@ -41,7 +42,7 @@
     <string name="long_click_map_label">Задръжте за да те заведем до мястото</string>
     <string name="entrance">Вход</string>
     <string name="restroom">Тоалетна</string>
-    <string name="parking">Паркинг</string>
+    <string name="parking">Места за паркиране</string>
     <string name="seating">Места за сядане</string>
     <string name="dismiss">Отхвърляне</string>
     <string name="add">Добави</string>

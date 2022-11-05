@@ -2,7 +2,9 @@ package tsvetomir.tonchev.findit.domain.mapper
 
 import tsvetomir.tonchev.findit.data.network.model.response.PlacesResponse
 import tsvetomir.tonchev.findit.data.network.model.response.nearbyplaces.NearbyPlacesResponse
+import tsvetomir.tonchev.findit.domain.model.AccessibleFeaturesUiModel
 import tsvetomir.tonchev.findit.domain.model.PlaceUiModel
+import tsvetomir.tonchev.findit.utils.accessibleFeatureToImageVector
 import tsvetomir.tonchev.findit.utils.accessibleFeatureToRes
 import javax.inject.Inject
 
@@ -37,8 +39,11 @@ class PlacesMapper @Inject constructor() {
                 placesLocalApi.find { localPlace -> localPlace.placeId == place.id }
             if (placeResponse != null) {
                 place.isAccessible = true
-                place.accessibleFeaturesResIds = placeResponse.accessibleFeatures.map {
-                    accessibleFeatureToRes(it)
+                place.accessibleFeaturesUiModelList = placeResponse.accessibleFeatures.map {
+                    AccessibleFeaturesUiModel(
+                        accessibleFeaturesResIds = accessibleFeatureToRes(it),
+                        accessibleFeatureImageVector = accessibleFeatureToImageVector(it)
+                    )
                 }
             }
             place

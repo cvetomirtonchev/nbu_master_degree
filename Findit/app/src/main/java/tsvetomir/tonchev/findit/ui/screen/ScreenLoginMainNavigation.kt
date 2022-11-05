@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import tsvetomir.tonchev.findit.ui.components.CircularIndeterminateProgressBar
+import tsvetomir.tonchev.findit.ui.login.LoginScreen
 import tsvetomir.tonchev.findit.ui.login.LoginViewModel
 import tsvetomir.tonchev.findit.ui.register.RegisterScreen
 

@@ -1,4 +1,4 @@
-package tsvetomir.tonchev.findit.ui.screen
+package tsvetomir.tonchev.findit.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,7 +28,7 @@ import tsvetomir.tonchev.findit.ui.components.ButtonType
 import tsvetomir.tonchev.findit.ui.components.ButtonWithRoundCornerShape
 import tsvetomir.tonchev.findit.ui.components.InputPasswordValueField
 import tsvetomir.tonchev.findit.ui.components.InputValueField
-import tsvetomir.tonchev.findit.ui.login.LoginViewModel
+import tsvetomir.tonchev.findit.ui.screen.Screens
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.SecondaryGreen
 
