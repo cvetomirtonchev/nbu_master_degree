@@ -29,7 +29,6 @@ class RegisterViewModel @Inject constructor(
     var isRegisterSuccessful = mutableStateOf(false)
 
     fun register() {
-        showLoading()
         if (!isFieldsPopulated()) {
             return
         }
