@@ -1,5 +1,6 @@
 package tsvetomir.tonchev.findit.ui.components.appcomponents
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -22,11 +23,14 @@ import kotlinx.coroutines.launch
 import tsvetomir.tonchev.findit.data.network.model.response.User
 import tsvetomir.tonchev.findit.ui.dashboard.DashboardViewModel
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
+import tsvetomir.tonchev.findit.ui.theme.SecondaryGreenAlpha
 
 
+private const val HELP = "Help"
+private const val LOG_OUT = "Log out"
 private val navigationMenus = listOf(
-    "Help",
-    "Log out"
+    HELP,
+    LOG_OUT
 )
 
 @ExperimentalUnitApi
@@ -40,6 +44,7 @@ fun DrawerContent(
     val user: User? = viewModel.userMutableState.value
     Column(
         modifier = Modifier
+            .background(color = SecondaryGreenAlpha)
             .fillMaxSize()
             .padding(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -112,19 +117,19 @@ fun NavigationDrawerItems(
                     scope.launch {
                         drawerState.close()
                     }
-                    if (item == "Log out") {
+                    if (item == LOG_OUT) {
                         viewModel.logout()
                     }
                 },
                 modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                 icon = {
                     when (item) {
-                        "Help" -> Icon(
+                        HELP -> Icon(
                             imageVector = Icons.Default.Home,
                             contentDescription = null,
                             tint = Color.White
                         )
-                        "Log out" -> Icon(
+                        LOG_OUT -> Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
                             tint = Color.White

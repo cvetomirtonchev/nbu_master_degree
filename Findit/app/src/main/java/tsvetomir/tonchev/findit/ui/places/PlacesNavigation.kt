@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -50,7 +50,7 @@ fun PlacesNavigation(viewModel: PlacesViewModel, location: Location) {
 
 @Composable
 fun TopNavigation(navController: NavHostController, tabItems: List<String>) {
-    val selectedItem = remember { mutableStateOf(0) }
+    val selectedItem = rememberSaveable { mutableStateOf(0) }
 
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.primary,

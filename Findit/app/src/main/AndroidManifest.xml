@@ -33,8 +33,10 @@
 
         <activity
             android:name=".ui.dashboard.DashboardActivity"
+            android:screenOrientation="portrait"
             android:label=""
-            android:theme="@style/Theme.FindIt" />
+            android:theme="@style/Theme.FindIt"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".ui.places.PlacesActivity"

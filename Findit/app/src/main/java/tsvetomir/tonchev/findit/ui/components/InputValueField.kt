@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import tsvetomir.tonchev.findit.ui.components.model.InputDataModel
 import tsvetomir.tonchev.findit.ui.theme.ColorError
 
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalComposeUiApi
 @Composable
 fun InputValueField(
@@ -61,6 +62,7 @@ fun InputValueField(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalComposeUiApi
 @Composable
 fun InputPasswordValueField(

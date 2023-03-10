@@ -34,17 +34,16 @@ class PlacesActivity : BaseActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val placeModel = intent.getParcelableExtra<PlaceModel>(PLACE_MODEL_EXTRA)
 
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 location?.let {
-                    getCityName(location) { city ->
-                        viewModel.loadPlacesNearYou(placeModel, location, city)
-                    }
                     setContent {
                         FindItTheme {
                             PlacesNavigation(viewModel, location)
                             CircularIndeterminateProgressBar(viewModel)
                         }
+                    }
+                    getCityName(location) { city ->
+                        viewModel.loadPlacesNearYou(placeModel, location, city)
                     }
                 }
             }

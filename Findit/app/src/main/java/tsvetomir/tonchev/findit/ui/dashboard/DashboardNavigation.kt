@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -98,7 +99,7 @@ fun NavigationPage(viewModel: DashboardViewModel) {
 
 @Composable
 fun BottomNavigation(navController: NavHostController, tabItems: List<String>) {
-    val selectedItem = remember { mutableStateOf(0) }
+    val selectedItem = rememberSaveable { mutableStateOf(0) }
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val parentRouteName = navBackStackEntry.value?.destination?.route
 
