@@ -1,10 +1,11 @@
 package tsvetomir.tonchev.findit.ui.places
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -27,6 +28,7 @@ class PlacesActivity : BaseActivity() {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
+    @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -35,7 +37,9 @@ class PlacesActivity : BaseActivity() {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 location?.let {
-                    viewModel.loadPlacesNearYou(placeModel, location, getCityName(location))
+                    getCityName(location) { city ->
+                        viewModel.loadPlacesNearYou(placeModel, location, city)
+                    }
                     setContent {
                         FindItTheme {
                             PlacesNavigation(viewModel, location)
@@ -46,11 +50,18 @@ class PlacesActivity : BaseActivity() {
             }
     }
 
-    private fun getCityName(location: Location): String {
+    private fun getCityName(location: Location, onCityProvided: (String) -> Unit) {
         val geocoder = Geocoder(this, Locale.US)
-        val addresses: List<Address> =
-            geocoder.getFromLocation(location.latitude, location.longitude, 1)
-        return addresses[0].locality
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            geocoder.getFromLocation(location.latitude, location.longitude, 1) {
+                onCityProvided(it.first().locality)
+            }
+        } else {
+            val city = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                ?.first()?.locality
+            onCityProvided(city ?: throw IllegalArgumentException("Missing city"))
+        }
     }
 
     companion object {

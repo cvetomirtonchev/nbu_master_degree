@@ -20,7 +20,7 @@ import tsvetomir.tonchev.findit.ui.base.BaseActivity
 import tsvetomir.tonchev.findit.ui.dashboard.DashboardActivity
 import tsvetomir.tonchev.findit.ui.screen.FindItNavHost
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
-import tsvetomir.tonchev.findit.utils.shouldAskForLocationPermisions
+import tsvetomir.tonchev.findit.utils.shouldAskForLocationPermissions
 import tsvetomir.tonchev.findit.utils.showLocationDialog
 
 
@@ -61,7 +61,7 @@ class LoginActivity : BaseActivity() {
 
     private fun startLocationPermissionRequest() {
         when {
-            shouldAskForLocationPermisions(this) -> {
+            shouldAskForLocationPermissions(this) -> {
                 requestPermissionLauncher.launch(
                     arrayOf(
                         Manifest.permission.ACCESS_COARSE_LOCATION,

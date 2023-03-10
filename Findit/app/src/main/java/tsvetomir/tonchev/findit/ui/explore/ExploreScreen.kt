@@ -28,7 +28,7 @@ import tsvetomir.tonchev.findit.ui.places.PlacesActivity
 import tsvetomir.tonchev.findit.ui.theme.ColorBlackOverlay
 import tsvetomir.tonchev.findit.ui.theme.FindItTheme
 import tsvetomir.tonchev.findit.ui.theme.WhiteColorTransparent
-import tsvetomir.tonchev.findit.utils.shouldAskForLocationPermisions
+import tsvetomir.tonchev.findit.utils.shouldAskForLocationPermissions
 import tsvetomir.tonchev.findit.utils.showLocationDialog
 
 @ExperimentalMaterial3Api
@@ -124,7 +124,7 @@ fun PlaceModel(placeModel: PlaceModel) {
         modifier = Modifier
             .padding(6.dp, 0.dp)
             .clickable {
-                if (shouldAskForLocationPermisions(context).not()) {
+                if (shouldAskForLocationPermissions(context).not()) {
                     PlacesActivity.start(context, placeModel)
                 } else {
                     showLocationDialog(context)

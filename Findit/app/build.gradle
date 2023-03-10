@@ -8,12 +8,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "tsvetomir.tonchev.findit"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -34,7 +34,7 @@ android {
         release {
             minifyEnabled false
             buildConfigField("String", "MAPS_KEY", "${MAPS_API_KEY}")
-            buildConfigField("String", "BASE_URL", '"http://192.168.1.2:8080/"')
+            buildConfigField("String", "BASE_URL", '"http://192.168.1.13:8080/"')
             buildConfigField("int", "CONNECT_TIMEOUT", "15")
             buildConfigField("int", "READ_TIMEOUT", "30")
             buildConfigField("int", "WRITE_TIMEOUT", "15")
@@ -44,7 +44,7 @@ android {
             debuggable true
             signingConfig signingConfigs.debug
             buildConfigField("String", "MAPS_KEY", "${MAPS_API_KEY}")
-            buildConfigField("String", "BASE_URL", '"http://192.168.1.2:8080/"')
+            buildConfigField("String", "BASE_URL", '"http://192.168.1.13:8080/"')
             buildConfigField("int", "CONNECT_TIMEOUT", "15")
             buildConfigField("int", "READ_TIMEOUT", "30")
             buildConfigField("int", "WRITE_TIMEOUT", "15")
